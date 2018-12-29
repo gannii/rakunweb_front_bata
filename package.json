@@ -1,0 +1,22 @@
+{
+  "name": "rakunweb_front_data",
+  "version": "1.0.0",
+  "description": "My superior Nuxt.js project",
+  "author": "gannii",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.0.0",
+    "nuxt-i18n": "^5.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
