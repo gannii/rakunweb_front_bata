@@ -197,7 +197,7 @@
 		
 		</main>
 
-    <nav id="floating-menu">
+    <nav class="floating-menu">
       <ul>
         <li id="btn-tipping" class="trig-dialog trig-lg" data-type="tipping">
           <span>
@@ -395,11 +395,10 @@ export default {
 		],
 	*/
     	script: [
-    		{ src: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js' }
+    		
     	],
     	link: [
-    		{ rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css' },
-    		{ rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css' }
+    		
     	]
     } 
   },

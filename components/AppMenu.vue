@@ -12,11 +12,11 @@
 					</span>
 				</div>
 				<div class="avatar-lg">
-					<a href="/my/profile/">
+					<nuxt-link to="/profile">
 						<span>
 							<img src="@/assets/img/avatar.jpg" alt="">
 						</span>
-					</a>
+					</nuxt-link>
 				</div>
 				<p>flower9292</p>
 
@@ -47,13 +47,13 @@
 							</a>
 						</li>
 						<li>
-							<a href="/my/post/">記事管理</a>
+							<nuxt-link to="/">記事管理</nuxt-link>
 						</li>
 						<li>
-							<a href="/my/notice/">全体お知らせ</a>
+							<nuxt-link to="/">全体お知らせ</nuxt-link>
 						</li>
 						<li>
-							<a href="/my/notice/">個別お知らせ</a>
+							<nuxt-link to="/">個別お知らせ</nuxt-link>
 						</li>
 						<li class="hasChild">
 							<em>言語設定</em>
@@ -71,13 +71,13 @@
 			</div>
 
 			<div class="g-menu-foot">
-				<a class="logo-rakun" href="/">
+				<nuxt-link class="logo-rakun" to="/">
 					<img src="@/assets/svg/logo_white.svg" alt="RAKUN">
-				</a>
+				</nuxt-link>
 				<aside>
 					<ul>
-						<li><a href="">利用規約</a></li>
-						<li><a href="">プライバシーポリシー</a></li>
+						<li><nuxt-link to="/">利用規約</nuxt-link></li>
+						<li><nuxt-link to="/">プライバシーポリシー</nuxt-link></li>
 						<li><nuxt-link to="/company">運営会社</nuxt-link></li>
 					</ul>
 				</aside>
@@ -86,9 +86,9 @@
 		</div><!-- #g-menu-wrap -->
 
 		<div id="btn-post">
-			<a href="/my/post/">
+			<nuxt-link to="/post">
 				<img src="@/assets/svg/icon_pen.svg" alt="">
-			</a>
+			</nuxt-link>
 		</div>
 
 		<div id="overlay"></div>

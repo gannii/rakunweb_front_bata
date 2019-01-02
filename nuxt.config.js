@@ -19,11 +19,17 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' }
+      { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' },
+      { rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css' },
+        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css' },
+      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css' }
     ],
     script: [
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' },
-      { src: 'https://unpkg.com/tippy.js@3/dist/tippy.all.min.js' }
+      { src: 'https://unpkg.com/tippy.js@3/dist/tippy.all.min.js' },
+      { src: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js' },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js' },
+      { src: 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.0/marked.min.js' }
     ]
   },
 
