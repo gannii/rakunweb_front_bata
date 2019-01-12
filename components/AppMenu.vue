@@ -1,6 +1,8 @@
 <template>
 	<div>
 
+		<div>{{$auth.state}}</div>
+
 		<div id="g-menu-wrap">
 	
 			<div class="g-menu-head">
