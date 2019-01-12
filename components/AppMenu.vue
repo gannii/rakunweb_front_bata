@@ -1,7 +1,8 @@
 <template>
 	<div>
 
-		<div>{{$auth.state}}</div>
+		<!-- <div>{{$auth.state}}</div> -->
+		<!-- <div>{{$auth.$storage.getUniversal('_token.azure')}}</div> -->
 
 		<div id="g-menu-wrap">
 	
@@ -112,15 +113,37 @@ export default {
 	],
 */
 
+	mounted(){
+	
+	/*
+		var id_token_param = $(location).attr('hash');
+
+		var id_token_string = id_token_param.substr(10);
+		var id_token_header = JSON.parse(atob(id_token_string.split('.')[0]));
+		var id_token_payload = JSON.parse(atob(id_token_string.split('.')[1]));
+	*/
+		var urlHash = location.hash;
+		if(urlHash.match(/access_token=/)){
+			this.$store.dispatch("set_access_token")
+		}
+
+		
+	},
+
 	methods: {
 		loginOAuth() {
 			this.$auth.loginWith('azure')
-
 		},
 
 		logoutOAuth() {
 			this.$auth.logout();
 
+			$('#wrap').removeClass('on');
+			$('#g-head').removeClass('on');
+			$('#g-menu-wrap').removeClass('on');
+			$('#overlay').fadeOut();
+			
+			this.$router.push("/")
 		}
 	}
 }

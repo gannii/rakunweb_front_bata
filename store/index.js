@@ -1,3 +1,4 @@
+import axios from "axios"
 
 
 export const state = () => ({
@@ -11,6 +12,12 @@ export const state = () => ({
 	data_type: null
 
 })
+
+export const config = {
+
+	api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
+
+}
 
 export const mutations = {
 
@@ -33,6 +40,34 @@ export const mutations = {
 }
 
 export const actions = {
+
+// COMMON
+	async set_access_token({ commit }){
+
+		var token = getParam('access_token');
+
+		var id_token_header = JSON.parse(atob(token.split('.')[0]));
+		var id_token_payload = JSON.parse(atob(token.split('.')[1]));
+
+		function getParam(name, url) {
+		    if (!url) url = window.location.href;
+		    name = name.replace(/[\[\]]/g, "\\$&");
+		    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+		// console.log(id_token_payload.oid);
+
+		axios.get(config.api_host + '/initial_setting/' + id_token_payload.oid)
+		.then((res) => {
+			console.log(res.data);
+		})
+
+	},
+
 
 // TOP
 	async init_idx(){
