@@ -1,16 +1,27 @@
-.sec.sec01 {
-  padding: 20px 0 0;
+.sec.sec-post {
+  padding: 40px 0 0;
 }
 
 #post_cat li {
-  cursor: pointer;
-  padding: 5px 0;
+  padding: 7.5px 0;
+}
+
+#post_cat li em.icon-plus {
+  cursor: auto;
 }
 
 #post_cat li b {
   font-size: 14px;
   display: inline-block;
   vertical-align: middle;
+  margin-left: 10px;
+}
+
+#post_cat li input {
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 40px);
   margin-left: 10px;
 }
 
@@ -165,4 +176,22 @@ input#ui_image {
 
 a.fa-arrows-alt {
   display: none;
+}
+
+@media screen and (min-width: 600px) {
+  .sec.sec-post {
+    padding: 30px 0 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .sec.sec-post {
+    padding: 20px 0 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .sec.sec-post {
+    padding: 0;
+  }
 }

@@ -5,7 +5,7 @@
 	
 			<div class="g-menu-head">
 
-
+<!--
 				<div class="cover">
 					<span>
 						<img src="@/assets/img/cover.jpg" alt="">
@@ -21,19 +21,20 @@
 				<p>flower9292</p>
 
 				<div class="logout">
-					<a href="">
+					<a @click="logoutOAuth">
 						<img src="@/assets/svg/icon_logout.svg" alt="ログアウト">
 					</a>
 				</div>
+-->
 
-		<!--
 				<div class="btn-signs">
 					<ul>
-						<li><a href="" target="_blank">ログイン</a></li>
+						<li><a @click="loginOAuth">ログイン</a></li>
 						<li><a class="fill" href="" target="_blank">新規登録</a></li>
+						<li><a @click="logoutOAuth">ログアウト</a></li>
 					</ul>
 				</div>
-		-->
+
 
 			</div>
 
@@ -46,6 +47,7 @@
 								<span>ウォレット</span>
 							</a>
 						</li>
+<!--
 						<li>
 							<nuxt-link to="/">記事管理</nuxt-link>
 						</li>
@@ -55,6 +57,7 @@
 						<li>
 							<nuxt-link to="/">個別お知らせ</nuxt-link>
 						</li>
+-->
 						<li class="hasChild">
 							<em>言語設定</em>
 							<ul>
@@ -95,3 +98,28 @@
 
 	</div>
 </template>
+
+
+<script>
+
+export default {
+
+/*
+	middleware: [
+		'auth',
+	],
+*/
+
+	methods: {
+		loginOAuth() {
+			this.$auth.loginWith('azure')
+
+		},
+
+		logoutOAuth() {
+			this.$auth.logout();
+
+		}
+	}
+}
+</script>

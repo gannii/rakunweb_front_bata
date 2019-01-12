@@ -2,7 +2,7 @@
   <div>
   
     <main>
-    
+
       <nav id="genre">
         <div class="inner max1000">
           <ul id="slick-genre">
@@ -10,13 +10,13 @@
               <a class="active" @click="get_latest_article">最新記事</a>
             </li>
             <li>
-              <a  @click="get_popular_article">人気記事</a>
+              <a @click="get_popular_article">人気記事</a>
             </li>
             <li>
-              <a  @click="get_popular_tag">人気タグ</a>
+              <a @click="get_popular_tag">人気タグ</a>
             </li>
             <li>
-              <a  @click="get_popular_user">人気ユーザー</a>
+              <a @click="get_popular_user">人気ユーザー</a>
             </li>
           </ul>
         </div>
@@ -245,7 +245,7 @@ export default {
   },
 
   methods: {
-    
+
   // 最新記事取得
     get_latest_article(e){
       this.$axios.$post('/home/latest_article')
@@ -298,112 +298,7 @@ export default {
 </script>
 
 <style scoped>
-#genre {
-  margin: 10px 0 0;
-  padding: 0 20px;
-}
 
-ul#slick-genre {
-  letter-spacing: -.4em;
-}
+@import "~/assets/css/idx.css";
 
-ul#slick-genre li {
-  letter-spacing: normal;
-  display: inline-block;
-  vertical-align: middle;
-  width: 50%;
-  padding: 0 5px;
-}
-
-ul#slick-genre li a {
-  letter-spacing: 0.1em;
-  text-align: center;
-  display: block;
-  padding: 15px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  -webkit-transition: border .3s;
-  transition: border .3s;
-}
-
-ul#slick-genre li a:hover {
-  border: 1px solid #9d9d9d;
-}
-
-ul#slick-genre li a.active {
-  color: #fff;
-  border: 1px solid #FF1E00;
-  background-color: #FF1E00;
-}
-
-.slick-slider .slick-track, .slick-slider .slick-list {
-  background: #fff;
-}
-
-.slick-initialized .slick-slide {
-  opacity: 0.6;
-  /* 両サイドの画像を透過 */
-}
-
-.slick-initialized .slick-slide.slick-active {
-  opacity: 1;
-  /* センター画像を非透過 */
-}
-
-.slick-prev,
-.slick-next {
-  width: 35px;
-  height: 35px;
-}
-
-.slick-prev {
-  left: -35px;
-}
-
-.slick-next {
-  right: -35px;
-}
-
-.slick-prev:before {
-  content: '';
-  display: block;
-  position: relative;
-  left: 12.5px;
-  width: 25px;
-  height: 25px;
-  border-top: 1px solid #000;
-  border-left: 1px solid #000;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-}
-
-.slick-next:before {
-  content: '';
-  display: block;
-  position: relative;
-  right: 2.5px;
-  width: 25px;
-  height: 25px;
-  border-top: 1px solid #000;
-  border-right: 1px solid #000;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-}
-
-/*
-.slick-prev::before, .slick-next::before{
-  color: #000;
-}
-*/
-@media screen and (min-width: 600px) {
-  ul#slick-genre li {
-    width: 33.33%;
-  }
-}
-
-@media screen and (min-width: 800px) {
-  ul#slick-genre li {
-    width: 25%;
-  }
-}
 </style>

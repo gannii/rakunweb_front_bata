@@ -1,4 +1,4 @@
-# rakunweb_front_data
+# rakunweb_front_bata
 
 > My superior Nuxt.js project
 

@@ -13,8 +13,9 @@
 
 				<div class="h-elem icons">
 					<ul>
+<!--
 						<li>
-							<button id="btn-notice">
+							<button id="btn-notice" @click="show_tippy">
 								<span>
 									<img src="@/assets/svg/icon_notice.svg" alt="お知らせ">
 								</span>
@@ -22,37 +23,37 @@
 							</button>
 						</li>
 						<li>
-							<button id="btn-alert">
+							<button id="btn-alert" @click="show_tippy">
 								<span>
 									<img src="@/assets/svg/icon_alert.svg" alt="通知">
 								</span>
 								<strong><b><i>28</i></b></strong>
 							</button>
 						</li>
+-->
 						<li>
-							<a href="/alert/">
+							<nuxt-link to="/search">
 								<span>
 									<img src="@/assets/svg/icon_search.svg" alt="検索">
 								</span>
-							</a>
+							</nuxt-link>
 						</li>
 					</ul>
 				</div>
 
 				<div id="btn-menu" class="h-elem">
 
-
+<!--
 					<div class="avatar-sm">
 						<span>
 							<img src="@/assets/img/avatar.jpg" alt="">
 						</span>
 					</div>
+-->
 
-	<!--
 					<div class="dotline">
 						<em><b></b><b></b><b></b></em>
 					</div>
-	-->
 
 				</div>
 
@@ -62,8 +63,9 @@
 		</header>
 
 
+
 		<div id="dtl-notice" class="tooltips">
-			<div class="in">
+			<div class="in" v-if="$store.state.tippy">
 				<dl>
 					<dt><span>全体お知らせ</span></dt>
 					<dd>
@@ -98,7 +100,7 @@
 		</div>
 
 		<div id="dtl-alert" class="tooltips">
-			<div class="in">
+			<div class="in" v-if="$store.state.tippy">
 				<ul>
 					<li>
 						<a href="">
@@ -154,5 +156,21 @@
 			</div>
 		</div>
 
+
 	</div>
 </template>
+
+
+<script>
+
+export default {
+
+	methods: {
+		show_tippy() {
+			this.$store.commit("SET_TIPPY", true)
+		}
+	}
+
+}
+
+</script>

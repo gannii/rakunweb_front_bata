@@ -148,9 +148,14 @@ $(function(){
 	    ]
 	});
 
-	$("#post_title").val('')
-	$('#post_content').val('');
-	simplemde.value('');
+
+// 編集時は初期化しない
+	if(document.getElementById("post-edit") == null){
+		$("#post_title").val('')
+		$('#post_content').val('');
+		simplemde.value('');
+	}
+
 
 	$('#ui_image').on('change', function(e){
 		toResize(e.target.files[0]);
@@ -203,9 +208,11 @@ $(function(){
 			dataH = $(this).attr('data-h');
 
 		drawing(dataW, dataH);
-
+/*
 		$('#dialog-resize').fadeOut();
 		$('#overlay').fadeOut();
+*/
+		removeModal();
 	});
 
 
@@ -234,13 +241,19 @@ $(function(){
 			}
 			image.src = e.target.result;
 		}
-		reader.readAsDataURL(file);
-
-		image_data_temporarily = '';
+		if (file) {
+			reader.readAsDataURL(file);
+			image_data_temporarily = '';
+		}
 	}
 
 // ミラー切替
+/*
 	$(document).on("click", ".fa-columns", function(){
+		$('#code-wrap').toggleClass('mir');
+	});
+*/
+	$('.fa-columns').on("click", function(){
 		$('#code-wrap').toggleClass('mir');
 	});
 
@@ -248,11 +261,23 @@ $(function(){
 	$(document).on("click", ".overlay", function(){
 		removeModal();
 	});
-*/
+*/	
+	$("#overlay").on("click", function(){
+		removeModal();
+	});
+
+/*
 	var removeModal = function (){
 		$('#dialog-resize, #overlay').fadeOut('fast').queue(function() {
 			this.remove();
 		});
+	};
+*/	
+	var removeModal = function (){
+		$('#dialog-resize').fadeOut().queue(function() {
+			this.remove();
+		});
+		$('#overlay').fadeOut();
 	};
 
 	var $editor = $('.editor-toolbar');
@@ -260,16 +285,22 @@ $(function(){
 	$editor.insertAfter($('#insertEditor'));
 
 
-	var $postCat = $('#post_cat'),
-		$postCatLi =$postCat.find('li');
-
-	$postCatLi.on('click', function(){
-
-		if($(this).find('em').hasClass('icon-minus')){
-			$(this).find('em').removeClass('icon-minus').addClass('icon-plus');
-		}else{
-			$(this).find('em').removeClass('icon-plus').addClass('icon-minus');
+// カテゴリ―
+	$(document).on("change", ".input-cat", function(){
+		if($(this).val().length > 1 || !$(this).val().match(/^[ 　\r\n\t]*$/)){
+			$('#post_cat').append(
+				'<li>' + 
+					'<em class="icon-plus"></em><input class="input-cat" type="text" placeholder="カテゴリ―を入力">' + 
+				'</li>'
+			);
+			$(this).after('<b>' + $(this).val() + '</b>');
+			$(this).prev('em').removeClass('icon-plus').addClass('icon-minus');
+			$(this).remove();
 		}
+	});
+	
+	$(document).on("click", ".icon-minus", function(){
+		$(this).parent('li').remove();
 	});
 
 });

@@ -21,15 +21,12 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.4.2/css/all.css' },
       { rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css' },
-        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css' }
+        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css' }
     ],
     script: [
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' },
       { src: 'https://unpkg.com/tippy.js@3/dist/tippy.all.min.js' },
-      { src: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js' },
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js' },
-      { src: 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.0/marked.min.js' }
+      { src: '//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js' }
     ]
   },
 
@@ -42,15 +39,26 @@ module.exports = {
   ** Global CSS
   */
   css: [
+
     { src: '@/assets/css/styles.css' },
-    { src: '@/assets/css/light-border.css' }
+    { src: '@/assets/css/light-border.css' },
+
+    { src: '@/assets/css/simplemde.css' },
+    { src: '@/assets/css/nailthumb.css' }
+
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    
+    { src: "~/plugins/simplemde", ssr: false },
+    { src: "~/plugins/marked", ssr: false },
+    { src: "~/plugins/nailthumb", ssr: false },
+
     { src: "~/plugins/script", ssr: false }
+    
   ],
 
   /*
@@ -59,6 +67,8 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+
+    '@nuxtjs/auth',
 
     ['nuxt-i18n', {
       locales: [
@@ -73,6 +83,25 @@ module.exports = {
     }]
 
   ],
+
+
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/callback',
+      home: '/'
+    },
+    strategies: {
+      azure: {
+        authorization_endpoint: 'https://seqdiob2c.b2clogin.com/seqdiob2c.onmicrosoft.com/oauth2/v2.0/authorize',
+        _provider: '~/auth/azure-provide.js',
+        _scheme: '~/auth/azure-scheme.js'
+      }
+    }   
+  },
+
+
   /*
   ** Axios module configuration
   */
