@@ -63,7 +63,6 @@
 		</header>
 
 
-
 		<div id="dtl-notice" class="tooltips">
 			<div class="in" v-if="$store.state.tippy">
 				<dl>
@@ -98,6 +97,7 @@
 				</dl>
 			</div>
 		</div>
+
 
 		<div id="dtl-alert" class="tooltips">
 			<div class="in" v-if="$store.state.tippy">
@@ -156,6 +156,80 @@
 			</div>
 		</div>
 
+		
+		<div id="init-setting" class="dialog">
+
+			<div class="in" v-if="$store.state.init_setting">
+
+				<div class="init-head">
+					<h2 class="h-md">
+						<img class="logo-rakun" src="@/assets/svg/logo_orange.svg" alt="RAKUN"><strong>Sign Up</strong>
+					</h2>
+				</div>
+
+				<div class="init-body">
+
+					<form @submit.prevent="initial_setting">
+
+						<table class="defor">
+							<tr>
+								<th>言語（Language）</th>
+								<td>
+									<label>
+										<input type="radio" v-model="language" value="1" /><span>日本語</span>
+									</label>
+									<label>
+										<input type="radio" v-model="language" value="2" /><span>English</span>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<th>アカウント名<b>※</b></th>
+								<td>
+									<input id="init-account" v-model="initAccount" type="text" />
+									<p class="nb">設定後に変更はできません</p>
+									<p class="error" v-if="error_initAccount">{{error_initAccount}}</p>
+								</td>
+							</tr>
+							<tr>
+								<th>アイコン画像</th>
+								<td>
+									<div id="profile_icon" class="avatar-lg">
+										<span>
+											<img id="preview_profile_icon">
+										</span>
+									</div>
+									<input id="input_profile_icon" type="file" @change="change_profile_icon">
+								</td>
+							</tr>
+							<tr>
+								<th>背景画像</th>
+								<td>
+									<img id="preview_profile_back_image">
+									<input id="input_profile_back_image" type="file" @change="change_profile_back_image">
+								</td>
+							</tr>
+							<tr>
+								<th>紹介文</th>
+								<td>
+									<textarea id="self_introduction" v-model="self_introduction" rows="5"></textarea>
+								</td>
+							</tr>
+						</table>
+
+						<div class="btns">
+							<button type="submit" class="btn orange">設 定</button>
+						</div>
+
+					</form>
+
+				</div>
+
+			</div>
+			<div class="dialog-close"><i class="far fa-times-circle"></i></div>
+	
+		</div>
+
 
 	</div>
 </template>
@@ -165,7 +239,79 @@
 
 export default {
 
+	data() {
+		return{
+			language: 1,
+			initAccount: '',
+			error_initAccount: null,
+
+			self_introduction: ''
+		}
+	},
+
 	methods: {
+
+		initial_setting(){
+
+			try {
+
+				if(!this.initAccount){
+
+					this.error_initAccount = 'アカウント名を入力して下さい'
+
+				}else{
+
+					this.error_initAccount = null
+
+					this.$axios.$post('/initial_setting',
+					{
+						params:{
+							b2c_oid: this.$store.state.b2c_oid,
+							b2c_login_form: 1,
+							account_name: this.initAccount,
+							language: this.language,
+							profile_icon: $('#preview_profile_icon').attr('src'),
+							profile_back_image: $('#preview_profile_back_image').attr('src'),
+							self_introduction: this.self_introduction
+						}
+					})
+					.then((res) => {
+
+						console.log(res.data.account_name);
+
+						localStorage.setItem('rakun-account', res.data)
+
+					})
+
+				}
+
+			} catch (e) {
+				
+			}
+		},
+
+		change_profile_icon(e){
+
+		    var reader = new FileReader();
+		    reader.onload = function (e) {
+		        $("#preview_profile_icon").attr('src', e.target.result);
+		        $('#profile_icon').show();
+		    }
+		    reader.readAsDataURL(e.target.files[0]);
+
+		},
+
+		change_profile_back_image(e){
+
+			var reader = new FileReader();
+		    reader.onload = function (e) {
+		        $("#preview_profile_back_image").attr('src', e.target.result);
+		        $("#preview_profile_back_image").show();
+		    }
+		    reader.readAsDataURL(e.target.files[0]);
+
+		},
+
 		show_tippy() {
 			this.$store.commit("SET_TIPPY", true)
 		}

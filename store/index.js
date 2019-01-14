@@ -4,6 +4,11 @@ import axios from "axios"
 export const state = () => ({
 
 // COMMON
+	loggedIn: false,
+
+	init_setting: false,
+	b2c_oid: null,
+
 	tippy: false,
 
 // TOP
@@ -15,13 +20,29 @@ export const state = () => ({
 
 export const config = {
 
+// スタブ
 	api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
+
+// 京都さん
+	// api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
 
 }
 
 export const mutations = {
 
 // COMMON
+	SET_LOGGED_IN: function (state, item) {
+		state.loggedIn = item
+	},
+
+	SET_INIT_SETTING: function (state, item) {
+		state.init_setting = item
+	},
+
+	SET_B2C_OID: function (state, item) {
+		state.b2c_oid = item
+	},
+
 	SET_TIPPY: function (state, item) {
 		state.tippy = item
 	},
@@ -59,12 +80,40 @@ export const actions = {
 		    return decodeURIComponent(results[2].replace(/\+/g, " "));
 		}
 
-		// console.log(id_token_payload.oid);
+		commit("SET_B2C_OID", id_token_payload.oid);
 
-		axios.get(config.api_host + '/initial_setting/' + id_token_payload.oid)
-		.then((res) => {
-			console.log(res.data);
-		})
+
+// 初回設定 フロー
+		var rakunAccount = localStorage.getItem('rakun-account');
+
+	// localStrageにアカウントが存在する場合
+		if(rakunAccount){
+
+	
+	// localStrageにアカウントが存在しないの場合 -> 初回設定未済確認
+		}else{
+
+			axios.get(config.api_host + '/initial_setting/' + id_token_payload.oid)
+			.then((res) => {
+
+				console.log(res.data.data.account_name);
+
+			// 返却値に値が存在する場合
+				if(res.data){
+
+
+			// 返却値がnullの場合
+				}else{
+					commit("SET_INIT_SETTING", true);
+					$('#init-setting').fadeIn();
+					$('#overlay').fadeIn();
+				}
+
+			})
+
+		}
+			
+		
 
 	},
 

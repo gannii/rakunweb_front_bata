@@ -215,7 +215,15 @@ export default {
   },
 
   async fetch ({ app, store }) {
-    let { data } = await app.$axios.$post('/home/latest_article')
+    let { data } = await app.$axios.$post('/home/latest_article',
+      {
+        params:{
+          language: 1,
+          page_num: 1,
+          page_size: 4,
+          login_account_name: "yamada307"
+        }
+    })
     console.log(data);
     store.commit('SET_DATA_TYPE', 'post')
     store.commit('SET_IDX_CONTENT', data.article_info)
@@ -248,7 +256,15 @@ export default {
 
   // 最新記事取得
     get_latest_article(e){
-      this.$axios.$post('/home/latest_article')
+      this.$axios.$post('/home/latest_article',
+        {
+          params:{
+            language: 1,
+            page_num: 1,
+            page_size: 4,
+            login_account_name: "yamada307"
+          }
+      })
       .then((res) => {
           console.log(res.data);
           this.$store.commit('SET_DATA_TYPE', 'post')
@@ -259,7 +275,16 @@ export default {
 
   // 人気記事取得
     get_popular_article(e){
-      this.$axios.$post('/home/popular_article')
+      this.$axios.$post('/home/popular_article',
+      {
+        params:{
+          language: 1,
+          page_num: 1,
+          page_size: 4,
+          last_days: 100,
+          login_account_name: "yamada307"
+        }
+      })
       .then((res) => {
           console.log(res.data);
           this.$store.commit('SET_DATA_TYPE', 'post')
@@ -270,7 +295,17 @@ export default {
 
   // 人気タグ取得
     get_popular_tag(e){
-      this.$axios.$post('/home/popular_tag')
+      this.$axios.$post('/home/popular_tag',
+      {
+        params:{
+          language: 1,
+          page_num: 1,
+          page_size: 4,
+          last_days: 100,
+          tags_cnt: 4,
+          login_account_name: "yamada307"
+        }
+      })
       .then((res) => {
           console.log(res.data);
           this.$store.commit('SET_DATA_TYPE', 'tag')
@@ -281,7 +316,16 @@ export default {
 
   // 人気ユーザー取得
     get_popular_user(e){
-      this.$axios.$post('/home/popular_user')
+      this.$axios.$post('/home/popular_user',
+      {
+        params:{
+          language: 1,
+          page_num: 1,
+          page_size: 4,
+          last_days: 100,
+          login_account_name: "yamada307"
+        }
+      })
       .then((res) => {
           console.log(res.data);
           this.$store.commit('SET_DATA_TYPE', 'user')

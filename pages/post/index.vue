@@ -108,17 +108,28 @@ export default {
 
 // 公開
 		post_publish(e){
+
+		// タイトル
+			var $postTitle = $('#post_title').val();
+
+		// タグ
+			var $postCat = [];
+			var $postCatLi = $('#post_cat').find('li b');
+			$postCatLi.each(function(i){
+				$postCat['tag' + i] = $(this).text();
+			});
+
+		// 本文
+			var $postContent = $('#post_content').val();
+
+		// API Call	
 			this.$axios.$post('/article_management/post_publish',
 			{
 				params:{
 					login_account_name: "yamada307",
-					title: "あいうえお",
-					tag: [
-						{
-							"tag": "お気に入りTag"
-						}
-					],
-					body: "1234567890qazwsxedcrfvtgbyhnujmik,ol.p;/テスト１テスト２テスト３",
+					title: $postTitle,
+					tag: $postCat,
+					body: $postContent,
 					language: 1
 				}
 			})
@@ -129,17 +140,28 @@ export default {
 
 // 下書き
 		post_draft(e){
+
+		// タイトル
+			var $postTitle = $('#post_title').val();
+
+		// タグ
+			var $postCat = [];
+			var $postCatLi = $('#post_cat').find('li b');
+			$postCatLi.each(function(i){
+				$postCat['tag' + i] = $(this).text();
+			});
+
+		// 本文
+			var $postContent = $('#post_content').val();
+
+		// API Call	
 			this.$axios.$post('/article_management/post_draft',
 			{
 				params:{
 					login_account_name: "yamada307",
-					title: "あいうえお",
-					tag: [
-						{
-							"tag": "お気に入りTag"
-						}
-					],
-					body: "1234567890qazwsxedcrfvtgbyhnujmik,ol.p;/テスト１テスト２テスト３",
+					title: $postTitle,
+					tag: $postCat,
+					body: $postContent,
 					language: 1
 				}
 			})

@@ -34,7 +34,6 @@
 					<ul>
 						<li><a @click="loginOAuth">ログイン</a></li>
 						<li><a class="fill" href="" target="_blank">新規登録</a></li>
-						<li><a @click="logoutOAuth">ログアウト</a></li>
 					</ul>
 				</div>
 
@@ -122,17 +121,34 @@ export default {
 		var id_token_header = JSON.parse(atob(id_token_string.split('.')[0]));
 		var id_token_payload = JSON.parse(atob(id_token_string.split('.')[1]));
 	*/
+
+	
+
+
 		var urlHash = location.hash;
 		if(urlHash.match(/access_token=/)){
-			this.$store.dispatch("set_access_token")
-		}
 
+			this.$store.dispatch("set_access_token")
+
+			// var rakunAccount = localStorage.getItem('rakun-account');
+
+			// if(rakunAccount){
+
+
+
+			// }else{
+
+				
+
+			// }
+		}
 		
 	},
 
 	methods: {
 		loginOAuth() {
 			this.$auth.loginWith('azure')
+
 		},
 
 		logoutOAuth() {

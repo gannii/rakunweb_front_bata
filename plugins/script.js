@@ -44,6 +44,12 @@ $(function(){
 
 
 // func
+
+	function dialogClose(){
+		$('.dialog').hide();
+		$('#overlay').fadeOut();
+	}
+
 	function resetMenu(){
 		$wrap.removeClass('on');
 		$gHead.removeClass('on');
@@ -70,6 +76,10 @@ $(function(){
 		theme: 'light-border',
 		performance: true
 	})
+
+	$('#overlay, .dialog-close').on('click', function(){
+		dialogClose();
+	});
 
 
 // evnet

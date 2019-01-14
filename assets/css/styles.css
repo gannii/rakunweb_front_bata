@@ -220,6 +220,8 @@ time i {
 #wrap {
   position: relative;
   left: 0;
+  min-height: calc(100vh - 75px);
+  padding-bottom: 161px;
   -webkit-transition: left 0.65s cubic-bezier(0.19, 1, 0.22, 1);
   transition: left 0.65s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -418,6 +420,129 @@ header#g-head.on {
   padding: 0;
 }
 
+#init-setting {
+  display: none;
+  overflow-y: scroll;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+  background-color: #f5f5f5;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  height: 90%;
+  max-height: 500px;
+  border-radius: 10px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+#init-setting .in {
+  text-align: center;
+  position: relative;
+  padding: 50px 5%;
+}
+
+#init-setting .in .init-head {
+  text-align: center;
+  margin: 10px 0 20px;
+}
+
+#init-setting .in .init-head h2 img,
+#init-setting .in .init-head h2 strong {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#init-setting .in .init-head h2 img {
+  margin-right: 15px;
+}
+
+#init-setting .in .init-head h2 strong {
+  color: #FF1E00;
+}
+
+#init-setting .in .init-body {
+  text-align: left;
+}
+
+#init-setting .in .init-body table.defor {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+}
+
+#init-setting .in .init-body table.defor b,
+#init-setting .in .init-body table.defor .nb {
+  color: #f00;
+}
+
+#init-setting .in .init-body table.defor b {
+  margin: 0 0 0 5px;
+}
+
+#init-setting .in .init-body table.defor p {
+  margin: 5px 0 0;
+}
+
+#init-setting .in .init-body table.defor tbody {
+  display: block;
+  width: 100%;
+}
+
+#init-setting .in .init-body table.defor tr {
+  display: block;
+  width: 100%;
+}
+
+#init-setting .in .init-body table.defor tr th,
+#init-setting .in .init-body table.defor tr td {
+  display: block;
+  width: 100%;
+}
+
+#init-setting .in .init-body table.defor tr th {
+  text-align: left;
+  padding: 20px 0 0;
+  font-weight: bold;
+}
+
+#init-setting .in .init-body table.defor tr td label {
+  margin-right: 30px;
+}
+
+#init-setting .in .init-body table.defor tr td label input,
+#init-setting .in .init-body table.defor tr td label span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#init-setting .in .init-body table.defor tr td label input[type="radio"] {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+#init-setting .in .init-body table.defor tr td label span {
+  margin: 0 0 0 5px;
+}
+
+#init-setting .in .init-body table.defor tr td #avatar-icon {
+  display: none;
+  margin: 0 0 10px;
+}
+
+#init-setting .in .init-body table.defor tr td #preview-cover {
+  display: none;
+}
+
+#init-setting .in .init-body .btns {
+  text-align: center;
+  margin: 30px 0 0;
+}
+
 /* AppHeader */
 main {
   margin: 75px 0 0;
@@ -459,6 +584,11 @@ main .sec .sec-head {
 
 /* AppFooter */
 footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
   text-align: center;
   color: #fff;
   background-color: #FF1E00;
@@ -976,6 +1106,10 @@ footer .inner {
 
 .sec.sec-list .sec-body {
   margin: 0 0 -40px;
+}
+
+.sec.sec-list .sec-body #view-dtl{
+  width: 100%;
 }
 
 .sec.sec-list .sec-body article {
@@ -1656,10 +1790,20 @@ input[type="checkbox"] {
 .btn img {
   width: 25px;
   height: auto;
+  position: relative;
+  top: 2px;
 }
 
 .btn.gray {
   background-color: #ccc;
+}
+
+.btn.frame {
+  border: 1px solid #ccc;
+}
+
+.btn.frame:hover {
+  border: 1px solid #9d9d9d;
 }
 
 .btn.orange {
@@ -1832,6 +1976,29 @@ input[type="checkbox"] {
   }
   #h-group .icons ul li {
     margin: 0 5px;
+  }
+  #init-setting .in .init-head {
+    margin: 10px 0 30px;
+  }
+  #init-setting .in .init-body table.defor {
+    display: table;
+  }
+  #init-setting .in .init-body table.defor tbody {
+    display: table-row-group;
+  }
+  #init-setting .in .init-body table.defor tr {
+    display: table-row;
+    width: auto;
+  }
+  #init-setting .in .init-body table.defor tr th,
+  #init-setting .in .init-body table.defor tr td {
+    display: table-cell;
+    vertical-align: top;
+    width: auto;
+    padding: 15px 20px;
+  }
+  #init-setting .in .init-body table.defor tr th {
+    width: 200px;
   }
   /* AppHeader */
   /* common */
