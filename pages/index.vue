@@ -59,8 +59,8 @@
                     <a href="#">{{content.title}}</a>
                   </h3>
                   <p>{{content.body}}</p>
-                  <div class="art-tag" v-for="tag in content.tags">
-                    <span>#{{tag.tag}}</span>
+                  <div class="art-tag">
+                    <span v-for="tag in content.tags">#{{tag.tag}}</span>
                   </div>
                 </div>
                 <div class="art-meta">
@@ -68,9 +68,9 @@
                     <div class="avatar-sm">
                       <nuxt-link :to="`/profile/${content.account_name}`">
                         <span>
-                          <img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
+                          <img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
                         </span>
-                        <em>{{content.nickname}}</em>
+                        <em>{{content.account_name}}</em>
                       </nuxt-link>
                     </div>
                     <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
@@ -103,8 +103,8 @@
                     <a href="#">{{content.title}}</a>
                   </h3>
                   <p>{{content.body}}</p>
-                  <div class="art-tag" v-for="tag in content.tags">
-                    <span>#{{tag.tag}}</span>
+                  <div class="art-tag">
+                    <span v-for="tag in content.tags">#{{tag.tag}}</span>
                   </div>
                 </div>
                 <div class="art-meta">
@@ -112,9 +112,9 @@
                     <div class="avatar-sm">
                       <nuxt-link :to="`/profile/${content.account_name}`">
                         <span>
-                          <img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
+                          <img :src="`${content.profile_icon}`" :alt="`${content.account_name}`">
                         </span>
-                        <em>{{content.nickname}}</em>
+                        <em>{{content.account_name}}</em>
                       </nuxt-link>
                     </div>
                     <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>

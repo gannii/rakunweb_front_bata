@@ -70,18 +70,6 @@
 
 <script>
 
-/*
-if (process.browser) {
-  require('~/assets/js/simplemde.js');
-  require('~/assets/js/marked.js');
-  require('~/assets/js/nailthumb.js');
-  require('~/assets/js/post.js');
-
-  require('~/assets/css/simplemde.css');
-  require('~/assets/css/nailthumb.css');
-}
-*/
-
 export default {
 	
 	head () {
@@ -99,7 +87,9 @@ export default {
 	},
 
 	middleware: [
-		// 'auth',
+
+		// 'auth'
+		
 	],
 
 	mounted(){
@@ -120,16 +110,17 @@ export default {
 			var $postCat = [];
 			var $postCatLi = $('#post_cat').find('li b');
 			$postCatLi.each(function(i){
-				$postCat['tag' + i] = $(this).text();
+				// $postCat['tag' + i] = $(this).text();
+				$postCat.push({'tag': $(this).text()});
 			});
 
 		// 本文
 			var $postContent = $('#post_content').val();
 
-		// API Call	
+		// API Call
 			this.$axios.$post('/article_management/post_publish',
 			{
-				login_account_name: "yamada307",
+				login_account_name: this.$store.state.login_account.account_name,
 				title: $postTitle,
 				tag: $postCat,
 				body: $postContent,
@@ -159,7 +150,7 @@ export default {
 		// API Call	
 			this.$axios.$post('/article_management/post_draft',
 			{
-				login_account_name: "yamada307",
+				login_account_name: this.$store.state.login_account.account_name,
 				title: $postTitle,
 				tag: $postCat,
 				body: $postContent,
