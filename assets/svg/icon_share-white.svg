@@ -5,16 +5,16 @@
 	 y="0px" width="30px" height="30px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve">
 <g>
 	<g>
-		<circle fill="#464646" cx="23.583" cy="5.732" r="5.731"/>
+		<circle fill="#FFFFFF" cx="23.583" cy="5.732" r="5.731"/>
 	</g>
 	<g>
-		<circle fill="#464646" cx="6.418" cy="15" r="5.732"/>
+		<circle fill="#FFFFFF" cx="6.418" cy="15" r="5.732"/>
 	</g>
 	<g>
-		<circle fill="#464646" cx="23.583" cy="24.269" r="5.731"/>
+		<circle fill="#FFFFFF" cx="23.583" cy="24.269" r="5.731"/>
 	</g>
 	<g>
-		<polygon fill="#464646" points="22.791,25.734 2.909,15 22.791,4.266 24.375,7.199 9.925,15 24.375,22.801 		"/>
+		<polygon fill="#FFFFFF" points="22.791,25.734 2.909,15 22.791,4.266 24.375,7.199 9.925,15 24.375,22.801 		"/>
 	</g>
 </g>
 </svg>

@@ -40,7 +40,7 @@ input#ui_image {
 }
 
 .cm-string.cm-url {
-  display: none;
+  /*display: none;*/
 }
 
 #canvas {

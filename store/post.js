@@ -1,7 +1,19 @@
+import axios from "axios"
+
 
 export const state = () => ({
 
 })
+
+export const config = {
+
+// スタブ
+	// api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
+
+// 京都さん
+	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+
+}
 
 export const mutations = {
 
@@ -11,6 +23,9 @@ export const actions = {
 
 	async init_post(){
 
+		var image_data_temporarily = ''; // 画像データ一時保管用
+
+/*
 		var ary_image = [];
 
 		var image_data_temporarily = ''; // 画像データ一時保管用
@@ -45,7 +60,6 @@ export const actions = {
 			fr.readAsDataURL(file);
 		}
 
-
 		function getFiles(base64, _file) {
 		 	
 			var barr, bin, i, len;
@@ -59,7 +73,7 @@ export const actions = {
 			}
 			var blob = new Blob([barr], {type: 'image/jpeg'});
 
-		/* 送信用画像 格納用 */
+		// 送信用画像 格納用
 			ary_image.push(base64);
 
 			var file = window.URL.createObjectURL(blob);
@@ -86,7 +100,7 @@ export const actions = {
 			simplemde.codemirror.replaceRange(text,{line:line,ch:ch},{line:line,ch:ch});
 
 		}
-
+*/
 
 		var simplemde = new SimpleMDE({
 			element: document.getElementById("post_content"),
@@ -246,8 +260,30 @@ export const actions = {
 					// ctx.clearRect(0,0,width,height);
 					ctx.drawImage(image,0,0,image.width,image.height,0,0,width,height);
 
-					var base64 = canvas.get(0).toDataURL('image/jpeg');        
-					getFiles(base64, file);
+					var base64 = canvas.get(0).toDataURL('image/jpeg');
+
+				// 画像APIコール
+
+					axios.post(config.api_host + '/article_management/upload_image',
+					{
+						login_account_name: localStorage.getItem('rakun-account'),
+						image: base64
+					})
+					.then((res) => {
+						
+						console.log(res.data.data.image_uri);
+
+						var line = simplemde.codemirror.getCursor().line;
+						var ch = simplemde.codemirror.getCursor().ch;
+
+						//文字列の挿入
+						var text = '![](' + res.data.data.image_uri + ')\n';
+
+						simplemde.codemirror.replaceRange(text,{line:line,ch:ch},{line:line,ch:ch});
+
+					});
+
+					// getFiles(base64, file);
 
 				}
 				image.src = e.target.result;
