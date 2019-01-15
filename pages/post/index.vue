@@ -83,7 +83,7 @@ if (process.browser) {
 */
 
 export default {
-
+	
 	head () {
 		return {
 			title: '投稿',
@@ -97,6 +97,10 @@ export default {
 		
 		} 
 	},
+
+	middleware: [
+		// 'auth',
+	],
 
 	mounted(){
 
@@ -125,13 +129,11 @@ export default {
 		// API Call	
 			this.$axios.$post('/article_management/post_publish',
 			{
-				params:{
-					login_account_name: "yamada307",
-					title: $postTitle,
-					tag: $postCat,
-					body: $postContent,
-					language: 1
-				}
+				login_account_name: "yamada307",
+				title: $postTitle,
+				tag: $postCat,
+				body: $postContent,
+				language: 1
 			})
 			.then((res) => {
 				console.log(res.data);
@@ -157,13 +159,11 @@ export default {
 		// API Call	
 			this.$axios.$post('/article_management/post_draft',
 			{
-				params:{
-					login_account_name: "yamada307",
-					title: $postTitle,
-					tag: $postCat,
-					body: $postContent,
-					language: 1
-				}
+				login_account_name: "yamada307",
+				title: $postTitle,
+				tag: $postCat,
+				body: $postContent,
+				language: 1
 			})
 			.then((res) => {
 				console.log(res.data);

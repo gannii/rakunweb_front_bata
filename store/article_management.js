@@ -1,8 +1,8 @@
 
 export const state = () => ({
 
-	publish_list: [], // 公開中記事
-	draft_list: [] // 下書き記事
+	publish_list: null, // 公開中記事
+	draft_list: null // 下書き記事
 
 })
 

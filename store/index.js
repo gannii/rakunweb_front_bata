@@ -4,7 +4,7 @@ import axios from "axios"
 export const state = () => ({
 
 // COMMON
-	loggedIn: false,
+	login_account: null,
 
 	init_setting: false,
 	b2c_oid: null,
@@ -21,18 +21,18 @@ export const state = () => ({
 export const config = {
 
 // スタブ
-	api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
+	// api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
 // 京都さん
-	// api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
 
 }
 
 export const mutations = {
 
 // COMMON
-	SET_LOGGED_IN: function (state, item) {
-		state.loggedIn = item
+	SET_LOGIN_ACCOUNT: function (state, item) {
+		state.login_account = item
 	},
 
 	SET_INIT_SETTING: function (state, item) {
@@ -62,6 +62,19 @@ export const mutations = {
 
 export const actions = {
 
+
+	load(ctx){
+		
+		var rakunAccount = localStorage.getItem('rakun-account');
+		if(rakunAccount){
+			this.$axios.$get('/account/' + rakunAccount + '/' + rakunAccount)
+			.then((res) => {
+				ctx.commit("SET_LOGIN_ACCOUNT", res.data);
+			});
+		}
+
+	},
+
 // COMMON
 	async set_access_token({ commit }){
 
@@ -89,24 +102,41 @@ export const actions = {
 	// localStrageにアカウントが存在する場合
 		if(rakunAccount){
 
-	
+			this.$axios.$get('/account/' + rakunAccount + '/' + rakunAccount)
+			.then((res) => {
+
+				commit("SET_LOGIN_ACCOUNT", res.data);
+
+			});
+
 	// localStrageにアカウントが存在しないの場合 -> 初回設定未済確認
 		}else{
 
 			axios.get(config.api_host + '/initial_setting/' + id_token_payload.oid)
 			.then((res) => {
 
-				console.log(res.data.data.account_name);
+				console.log(res.data);
 
-			// 返却値に値が存在する場合
-				if(res.data){
+			// account_nameがnullの場合
+				if(res.data.data.account_name == "null"){
 
-
-			// 返却値がnullの場合
-				}else{
 					commit("SET_INIT_SETTING", true);
 					$('#init-setting').fadeIn();
 					$('#overlay').fadeIn();
+
+			// account_nameが存在する場合
+				}else{
+					
+					this.$axios.$get('/account/' + res.data.data.account_name + '/' + res.data.data.account_name)
+					.then((res) => {
+
+						console.log(res.data);
+
+						commit("SET_LOGIN_ACCOUNT", res.data);
+
+						localStorage.setItem('rakun-account', res.data.account_name)
+					
+					});
 				}
 
 			})

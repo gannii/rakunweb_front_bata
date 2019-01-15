@@ -419,11 +419,9 @@ export default {
       app.$axios.$get('/account/${params.account_name}'),
       app.$axios.$post('/profile/feed',
         {
-          params:{
-            profile_account_name: params.account_name,
-            page_num: 1,
-            page_size: 4
-          }
+          profile_account_name: params.account_name,
+          page_num: 1,
+          page_size: 4
         })
     ])
 
@@ -526,12 +524,10 @@ export default {
 
           this.$axios.$post('/tip',
           {
-            params:{
-              login_account_name: this.$route.params.account_name,
-              profile_account_name: this.$route.params.account_name,
-              tip_amount: tipTotal,
-              message: tipMessage
-            }
+            login_account_name: this.$route.params.account_name,
+            profile_account_name: this.$route.params.account_name,
+            tip_amount: tipTotal,
+            message: tipMessage
           })
           .then((res) => {
             console.log(res);

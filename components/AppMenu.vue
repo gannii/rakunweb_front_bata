@@ -8,29 +8,30 @@
 	
 			<div class="g-menu-head">
 
-<!--
-				<div class="cover">
-					<span>
-						<img src="@/assets/img/cover.jpg" alt="">
-					</span>
-				</div>
-				<div class="avatar-lg">
-					<nuxt-link to="/profile">
+				<div v-if="$store.state.login_account">
+					<div class="cover">
 						<span>
-							<img src="@/assets/img/avatar.jpg" alt="">
+							<img :src="`${$store.state.login_account.profile_back_image}`" :alt="`${$store.state.login_account.account_name}`">
 						</span>
-					</nuxt-link>
-				</div>
-				<p>flower9292</p>
+					</div>
+					<div class="avatar-lg">
+						<nuxt-link to="/profile">
+							<span>
+								<img :src="`${$store.state.login_account.profile_icon}`" :alt="`${$store.state.login_account.account_name}`">
+							</span>
+						</nuxt-link>
+					</div>
+					<p>flower9292</p>
 
-				<div class="logout">
-					<a @click="logoutOAuth">
-						<img src="@/assets/svg/icon_logout.svg" alt="ログアウト">
-					</a>
+					<div class="logout">
+						<a @click="logoutOAuth">
+							<img src="@/assets/svg/icon_logout.svg" alt="ログアウト">
+						</a>
+					</div>
 				</div>
--->
 
-				<div class="btn-signs">
+
+				<div class="btn-signs" v-else>
 					<ul>
 						<li><a @click="loginOAuth">ログイン</a></li>
 						<li><a class="fill" href="" target="_blank">新規登録</a></li>
@@ -49,17 +50,15 @@
 								<span>ウォレット</span>
 							</a>
 						</li>
-<!--
-						<li>
-							<nuxt-link to="/">記事管理</nuxt-link>
+						<li v-if="$store.state.login_account">
+							<nuxt-link to="/article_management/">記事管理</nuxt-link>
 						</li>
-						<li>
+						<li v-if="$store.state.login_account">
 							<nuxt-link to="/">全体お知らせ</nuxt-link>
 						</li>
-						<li>
+						<li v-if="$store.state.login_account">
 							<nuxt-link to="/">個別お知らせ</nuxt-link>
 						</li>
--->
 						<li class="hasChild">
 							<em>言語設定</em>
 							<ul>
@@ -90,7 +89,7 @@
 
 		</div><!-- #g-menu-wrap -->
 
-		<div id="btn-post">
+		<div id="btn-post" v-if="$store.state.login_account">
 			<nuxt-link to="/post">
 				<img src="@/assets/svg/icon_pen.svg" alt="">
 			</nuxt-link>
@@ -106,53 +105,25 @@
 
 export default {
 
-/*
-	middleware: [
-		'auth',
-	],
-*/
-
 	mounted(){
-	
-	/*
-		var id_token_param = $(location).attr('hash');
-
-		var id_token_string = id_token_param.substr(10);
-		var id_token_header = JSON.parse(atob(id_token_string.split('.')[0]));
-		var id_token_payload = JSON.parse(atob(id_token_string.split('.')[1]));
-	*/
-
-	
-
-
 		var urlHash = location.hash;
 		if(urlHash.match(/access_token=/)){
-
 			this.$store.dispatch("set_access_token")
-
-			// var rakunAccount = localStorage.getItem('rakun-account');
-
-			// if(rakunAccount){
-
-
-
-			// }else{
-
-				
-
-			// }
+		}else{
+			this.$store.dispatch("load");
 		}
-		
 	},
 
 	methods: {
 		loginOAuth() {
 			this.$auth.loginWith('azure')
-
 		},
 
 		logoutOAuth() {
 			this.$auth.logout();
+
+			this.$store.commit("SET_LOGIN_ACCOUNT", null);
+			localStorage.removeItem('rakun-account');
 
 			$('#wrap').removeClass('on');
 			$('#g-head').removeClass('on');

@@ -25,99 +25,109 @@
 
 
 							<div class="view show">
-
-								<article v-for="content in $store.state.article_management.publish_list" :key="content.article_id">
-									<div class="art-in">
-										<div class="art-img">
-											<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
-											</a>
-										</div>
-										<div class="art-dtl">
-											<h3 class="h-sm">
-												<a href="#">{{content.title}}</a>
-											</h3>
-											<p>{{content.body}}</p>
-											<div class="art-tag" v-for="tag in content.tags">
-												<span>#{{tag.tag}}</span>
+								
+								<div v-if="$store.state.article_management.publish_list.length != 0">
+									<article v-for="content in $store.state.article_management.publish_list" :key="content.article_id">
+										<div class="art-in">
+											<div class="art-img">
+												<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
+												</a>
 											</div>
-										</div>
-										<div class="art-meta">
-											<div class="art-user">
-												<div class="avatar-sm">
-													<nuxt-link :to="`/profile/${content.account_name}`">
-														<span>
-															<img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
-														</span>
-														<em>{{content.nickname}}</em>
-													</nuxt-link>
+											<div class="art-dtl">
+												<h3 class="h-sm">
+													<a href="#">{{content.title}}</a>
+												</h3>
+												<p>{{content.body}}</p>
+												<div class="art-tag" v-for="tag in content.tags">
+													<span>#{{tag.tag}}</span>
 												</div>
-												 <time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
 											</div>
-											<div class="art-cnts">
-												<ul>
-													<li><img src="@/assets/svg/icon_comment.svg" alt=""><b>{{content.comments_count}}</b></li>
-													<li><img src="@/assets/svg/icon_like.svg" alt=""><b>{{content.reviews_count}}</b></li>
-													<li><img src="@/assets/svg/icon_share.svg" alt=""><b>{{content.shares_count}}</b></li>
-													<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b></li>
-												</ul>
+											<div class="art-meta">
+												<div class="art-user">
+													<div class="avatar-sm">
+														<nuxt-link :to="`/profile/${content.account_name}`">
+															<span>
+																<img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
+															</span>
+															<em>{{content.nickname}}</em>
+														</nuxt-link>
+													</div>
+													 <time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
+												</div>
+												<div class="art-cnts">
+													<ul>
+														<li><img src="@/assets/svg/icon_comment.svg" alt=""><b>{{content.comments_count}}</b></li>
+														<li><img src="@/assets/svg/icon_like.svg" alt=""><b>{{content.reviews_count}}</b></li>
+														<li><img src="@/assets/svg/icon_share.svg" alt=""><b>{{content.shares_count}}</b></li>
+														<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b></li>
+													</ul>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="art-menu">
-										<span>
-											<img src="@/assets/svg/icon_submenu.svg">
-										</span>
-									</div>
-								</article>
+										<div class="art-menu">
+											<span>
+												<img src="@/assets/svg/icon_submenu.svg">
+											</span>
+										</div>
+									</article>
+								</div>
+								<div v-else>
+									<p>現在、公開中の記事はありません</p>
+								</div>
 
 							</div>
 
 
 							<div class="view">
 								
-								<article v-for="content in $store.state.article_management.draft_list" :key="content.article_id">
-									<div class="art-in">
-										<div class="art-img">
-											<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
-											</a>
-										</div>
-										<div class="art-dtl">
-											<h3 class="h-sm">
-												<a href="#">{{content.title}}</a>
-											</h3>
-											<p>{{content.body}}</p>
-											<div class="art-tag" v-for="tag in content.tags">
-												<span>#{{tag.tag}}</span>
+								<div v-if="$store.state.article_management.draft_list.length != 0"">
+									<article v-for="content in $store.state.article_management.draft_list" :key="content.article_id">
+										<div class="art-in">
+											<div class="art-img">
+												<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
+												</a>
 											</div>
-										</div>
-										<div class="art-meta">
-											<div class="art-user">
-												<div class="avatar-sm">
-													<nuxt-link :to="`/profile/${content.account_name}`">
-														<span>
-															<img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
-														</span>
-														<em>{{content.nickname}}</em>
-													</nuxt-link>
+											<div class="art-dtl">
+												<h3 class="h-sm">
+													<a href="#">{{content.title}}</a>
+												</h3>
+												<p>{{content.body}}</p>
+												<div class="art-tag" v-for="tag in content.tags">
+													<span>#{{tag.tag}}</span>
 												</div>
-												<time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
 											</div>
-											<div class="art-cnts">
-												<ul>
-													<li><img src="@/assets/svg/icon_comment.svg" alt=""><b>{{content.comments_count}}</b></li>
-													<li><img src="@/assets/svg/icon_like.svg" alt=""><b>{{content.reviews_count}}</b></li>
-													<li><img src="@/assets/svg/icon_share.svg" alt=""><b>{{content.shares_count}}</b></li>
-													<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b></li>
-												</ul>
+											<div class="art-meta">
+												<div class="art-user">
+													<div class="avatar-sm">
+														<nuxt-link :to="`/profile/${content.account_name}`">
+															<span>
+																<img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
+															</span>
+															<em>{{content.nickname}}</em>
+														</nuxt-link>
+													</div>
+													<time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
+												</div>
+												<div class="art-cnts">
+													<ul>
+														<li><img src="@/assets/svg/icon_comment.svg" alt=""><b>{{content.comments_count}}</b></li>
+														<li><img src="@/assets/svg/icon_like.svg" alt=""><b>{{content.reviews_count}}</b></li>
+														<li><img src="@/assets/svg/icon_share.svg" alt=""><b>{{content.shares_count}}</b></li>
+														<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b></li>
+													</ul>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="art-menu">
-										<span>
-											<img src="@/assets/svg/icon_submenu.svg">
-										</span>
-									</div>
-								</article>
+										<div class="art-menu">
+											<span>
+												<img src="@/assets/svg/icon_submenu.svg">
+											</span>
+										</div>
+									</article>
+								</div>
+								<div v-else>
+									<p>現在、下書きの記事はありません</p>
+								</div>
 
 							</div>
 
@@ -160,29 +170,24 @@ export default {
 		// 公開中記事取得
 	   		app.$axios.$post('/article_management/publish/list',
 			{
-				params:{
-					login_account_name: "yamada307",
-					page_num: 1,
-					page_size: 4
-				}
+				login_account_name: store.state.login_account.account_name,
+				page_num: 1,
+				page_size: 4
 			}),
 
 	   	// 下書き記事取得
 	   		app.$axios.$post('/article_management/draft/list',
 			{
-				params:{
-					login_account_name: "yamada307",
-					page_num: 1,
-					page_size: 4
-				}
+				login_account_name: store.state.login_account.account_name,
+				page_num: 1,
+				page_size: 4
 			})
 	    ])
 
 	    console.log(publish_list.data.article_info);
 	    console.log(draft_list.data.article_info);
-			
+		
 		store.commit('article_management/SET_PUBLISH_LIST', publish_list.data.article_info)
-
 		store.commit('article_management/SET_DRAFT_LIST', draft_list.data.article_info)
 
 	},

@@ -109,10 +109,10 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
 
   // スタブ
-    baseURL: 'https://rakunwebstub.azurewebsites.net/api/v1'
+    // baseURL: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
   // 京都さん
-    // baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+    baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1'
 
   },
 

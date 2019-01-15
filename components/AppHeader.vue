@@ -13,8 +13,8 @@
 
 				<div class="h-elem icons">
 					<ul>
-<!--
-						<li>
+
+						<li v-if="$store.state.login_account">
 							<button id="btn-notice" @click="show_tippy">
 								<span>
 									<img src="@/assets/svg/icon_notice.svg" alt="お知らせ">
@@ -22,7 +22,7 @@
 								<strong><b><i>2</i></b></strong>
 							</button>
 						</li>
-						<li>
+						<li v-if="$store.state.login_account">
 							<button id="btn-alert" @click="show_tippy">
 								<span>
 									<img src="@/assets/svg/icon_alert.svg" alt="通知">
@@ -30,7 +30,7 @@
 								<strong><b><i>28</i></b></strong>
 							</button>
 						</li>
--->
+
 						<li>
 							<nuxt-link to="/search">
 								<span>
@@ -43,15 +43,13 @@
 
 				<div id="btn-menu" class="h-elem">
 
-<!--
-					<div class="avatar-sm">
+					<div class="avatar-sm" v-if="$store.state.login_account">
 						<span>
-							<img src="@/assets/img/avatar.jpg" alt="">
+							<img :src="`${$store.state.login_account.profile_icon}`" :alt="`${$store.state.login_account.account_name}`">
 						</span>
 					</div>
--->
 
-					<div class="dotline">
+					<div class="dotline" v-else>
 						<em><b></b><b></b><b></b></em>
 					</div>
 
@@ -265,21 +263,32 @@ export default {
 
 					this.$axios.$post('/initial_setting',
 					{
-						params:{
-							b2c_oid: this.$store.state.b2c_oid,
-							b2c_login_form: 1,
-							account_name: this.initAccount,
-							language: this.language,
-							profile_icon: $('#preview_profile_icon').attr('src'),
-							profile_back_image: $('#preview_profile_back_image').attr('src'),
-							self_introduction: this.self_introduction
-						}
+						b2c_oid: this.$store.state.b2c_oid,
+						b2c_login_form: 1,
+						account_name: this.initAccount,
+						language: this.language,
+						profile_icon: $('#preview_profile_icon').attr('src'),
+						profile_back_image: $('#preview_profile_back_image').attr('src'),
+						self_introduction: this.self_introduction
 					})
 					.then((res) => {
 
 						console.log(res.data.account_name);
 
-						localStorage.setItem('rakun-account', res.data)
+						// localStorage.setItem('rakun-account', res.data)
+
+						this.$axios.$get('/account/' + res.data.account_name + '/' + res.data.account_name)
+						.then((res) => {
+
+							this.$store.commit("SET_LOGIN_ACCOUNT", res.data);
+
+							localStorage.setItem('rakun-account', res.data.account_name);
+
+							this.$store.commit("SET_INIT_SETTING", false);
+							$('#init-setting').fadeOut();
+							$('#overlay').fadeOut();
+						
+						});
 
 					})
 

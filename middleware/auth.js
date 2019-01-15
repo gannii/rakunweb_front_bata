@@ -1,7 +1,7 @@
 export default function({store, redirect}) {
-	if (!store.state.auth.loggedIn) {
+	if (store.state.login_account == null) {
 		redirect('/');
 	} else {
-		redirect('/home');
+		// redirect('/home');
 	}
 }

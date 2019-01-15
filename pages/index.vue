@@ -59,8 +59,8 @@
                     <a href="#">{{content.title}}</a>
                   </h3>
                   <p>{{content.body}}</p>
-                  <div class="art-tag">
-                    <span>#くりぷ豚</span><span>#ゲーム</span><span>#Dappsゲーム</span><span>#育成</span><span>#イーサリアム</span>
+                  <div class="art-tag" v-for="tag in content.tags">
+                    <span>#{{tag.tag}}</span>
                   </div>
                 </div>
                 <div class="art-meta">
@@ -73,7 +73,7 @@
                         <em>{{content.nickname}}</em>
                       </nuxt-link>
                     </div>
-                    <time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
+                    <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
                   </div>
                   <div class="art-cnts">
                     <ul>
@@ -103,8 +103,8 @@
                     <a href="#">{{content.title}}</a>
                   </h3>
                   <p>{{content.body}}</p>
-                  <div class="art-tag">
-                    <span>#くりぷ豚</span><span>#ゲーム</span><span>#Dappsゲーム</span><span>#育成</span><span>#イーサリアム</span>
+                  <div class="art-tag" v-for="tag in content.tags">
+                    <span>#{{tag.tag}}</span>
                   </div>
                 </div>
                 <div class="art-meta">
@@ -117,7 +117,7 @@
                         <em>{{content.nickname}}</em>
                       </nuxt-link>
                     </div>
-                    <time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
+                    <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
                   </div>
                   <div class="art-cnts">
                     <ul>
@@ -217,12 +217,10 @@ export default {
   async fetch ({ app, store }) {
     let { data } = await app.$axios.$post('/home/latest_article',
       {
-        params:{
-          language: 1,
-          page_num: 1,
-          page_size: 4,
-          login_account_name: "yamada307"
-        }
+        language: 1,
+        page_num: 1,
+        page_size: 4,
+        login_account_name: "yamada307"
     })
     console.log(data);
     store.commit('SET_DATA_TYPE', 'post')
@@ -258,12 +256,10 @@ export default {
     get_latest_article(e){
       this.$axios.$post('/home/latest_article',
         {
-          params:{
-            language: 1,
-            page_num: 1,
-            page_size: 4,
-            login_account_name: "yamada307"
-          }
+          language: 1,
+          page_num: 1,
+          page_size: 4,
+          login_account_name: "yamada307"
       })
       .then((res) => {
           console.log(res.data);
@@ -277,13 +273,11 @@ export default {
     get_popular_article(e){
       this.$axios.$post('/home/popular_article',
       {
-        params:{
-          language: 1,
-          page_num: 1,
-          page_size: 4,
-          last_days: 100,
-          login_account_name: "yamada307"
-        }
+        language: 1,
+        page_num: 1,
+        page_size: 4,
+        last_days: 100,
+        login_account_name: "yamada307"
       })
       .then((res) => {
           console.log(res.data);
@@ -297,14 +291,12 @@ export default {
     get_popular_tag(e){
       this.$axios.$post('/home/popular_tag',
       {
-        params:{
-          language: 1,
-          page_num: 1,
-          page_size: 4,
-          last_days: 100,
-          tags_cnt: 4,
-          login_account_name: "yamada307"
-        }
+        language: 1,
+        page_num: 1,
+        page_size: 4,
+        last_days: 100,
+        tags_cnt: 4,
+        login_account_name: "yamada307"
       })
       .then((res) => {
           console.log(res.data);
@@ -318,13 +310,11 @@ export default {
     get_popular_user(e){
       this.$axios.$post('/home/popular_user',
       {
-        params:{
-          language: 1,
-          page_num: 1,
-          page_size: 4,
-          last_days: 100,
-          login_account_name: "yamada307"
-        }
+        language: 1,
+        page_num: 1,
+        page_size: 4,
+        last_days: 100,
+        login_account_name: "yamada307"
       })
       .then((res) => {
           console.log(res.data);
