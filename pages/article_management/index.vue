@@ -7,7 +7,6 @@
 			
 				<div class="inner">
 
-
 					<div class="sec-head">
 						
 						<nav id="view-nav">
