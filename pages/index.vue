@@ -51,7 +51,7 @@
             <article v-for="content in $store.state.data_latest_article" :key="content.article_id">
               <div class="art-in">
                 <div class="art-img">
-                  <nuxt-link :to="`/artile/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
+                  <nuxt-link :to="`/article/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
                   </nuxt-link>
                 </div>
                 <div class="art-dtl">
@@ -95,7 +95,7 @@
             <article v-for="content in $store.state.data_popular_article" :key="content.article_id">
               <div class="art-in">
                 <div class="art-img">
-                  <nuxt-link :to="`/artile/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
+                  <nuxt-link :to="`/article/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
                   </nuxt-link>
                 </div>
                 <div class="art-dtl">
@@ -266,6 +266,9 @@ export default {
       store.commit('SET_DATA_POPULAR_USER', data_popular_user.data.user_info)
 
     // }
+
+    console.log(data_latest_article.data.article_info);
+    
     store.commit('SET_DATA_TYPE', 'post')
     store.commit('SET_IDX_TABS', 'latest_article')
     

@@ -29,6 +29,7 @@
   margin: 0 0 5px 10px;
 }
 
+/*
 .sec.sec-article .sec-body h1, .sec.sec-article .sec-body h2, .sec.sec-article .sec-body h3, .sec.sec-article .sec-body h4, .sec.sec-article .sec-body h5, .sec.sec-article .sec-body h6 {
   margin: 15px 0;
 }
@@ -43,6 +44,7 @@
   height: auto;
   margin: 15px 0;
 }
+*/
 
 .sec.sec-article .sec-foot .icon-wrap {
   display: table;

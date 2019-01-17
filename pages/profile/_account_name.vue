@@ -14,8 +14,8 @@
 						</div>
 						<div class="prof-dtl">
 							<h2>
-								<strong class="h-md">{{$store.state.profile.profile_info.nickname}}</strong>
-								<small class="h-sm">@{{$store.state.profile.profile_info.account_name}}</small>
+								<strong class="h-md">{{$store.state.profile.profile_info.account_name}}</strong>
+								<!-- <small class="h-sm">@{{$store.state.profile.profile_info.account_name}}</small> -->
 							</h2>
 							<div id="prof-edit" class="trig-dialog" data-type="prof-edit">プロフィール編集</div>
 							<div class="sns">
@@ -41,7 +41,7 @@
 						<div class="art-cnts">
 							<ul>
 								<li><img src="@/assets/svg/icon_prof-followee.svg" alt=""><span><b>{{$store.state.profile.profile_info.followed_count}}</b></span></li>
-								<li><img src="@/assets/svg/icon_prof-like.svg" alt=""><span><b>{{$store.state.profile.profile_info.review_count}}</b></span></li>
+								<li><img src="@/assets/svg/icon_prof-like.svg" alt=""><span><b>{{$store.state.profile.profile_info.reviewing_count}}</b></span></li>
 								<li><img src="@/assets/svg/icon_post.svg" alt=""><span><b>{{$store.state.profile.profile_info.articles_count}}</b></span></li>
 								<li><img src="@/assets/svg/icon_prof-follower.svg" alt=""><span><b>{{$store.state.profile.profile_info.following_count}}</b></span></li>
 								<li><img src="@/assets/svg/icon_prof-liked.svg" alt=""><span><b>{{$store.state.profile.profile_info.reviewed_count}}</b></span></li>
@@ -382,7 +382,7 @@ export default {
 
 	head () {
     return {
-    	title: this.$store.state.profile.profile_info.nickname,
+    	title: this.$store.state.profile.profile_info.account_name,
       titleTemplate: '%s - RAKUN',
 	/*
 		meta: [
@@ -416,7 +416,7 @@ export default {
 	async fetch ({ app, store, params }) {
 
     let [data_profile, data_content] = await Promise.all([
-      app.$axios.$get('/account/${params.account_name}'),
+      app.$axios.$get('/account/' + params.account_name),
       app.$axios.$post('/profile/feed',
         {
           profile_account_name: params.account_name,
@@ -424,6 +424,9 @@ export default {
           page_size: 4
         })
     ])
+
+    console.log(data_profile.data);
+    console.log(data_content.data.article_info);
 
     store.commit('profile/SET_PROFILE_INFO', data_profile.data)
 
@@ -436,14 +439,14 @@ export default {
 
 	computed:{
 	    PROFILE_BACK_IMAGE(){
-			return this.$store.state.profile.profile_back_image
+			return this.$store.state.profile.profile_info.profile_back_image
 	    },
 	    PROFILE_ICON(){
-			return this.$store.state.profile.profile_icon
+			return this.$store.state.profile.profile_info.profile_icon
 	    },
 
       PROFILE_DATA_TYPE(){
-        return this.$store.state.profile.profile_data_type
+        return this.$store.state.profile.profile_info.profile_data_type
       }
 
 	},

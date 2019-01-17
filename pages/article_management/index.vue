@@ -28,12 +28,12 @@
 								<article v-if="$store.state.article_management.publish_list.length != 0" v-for="content in $store.state.article_management.publish_list" :key="content.article_id">
 									<div class="art-in">
 										<div class="art-img">
-											<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
-											</a>
+											<nuxt-link :to="`/article/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
+											</nuxt-link>
 										</div>
 										<div class="art-dtl">
 											<h3 class="h-sm">
-												<a href="#">{{content.title}}</a>
+												 <nuxt-link :to="`/article/${content.article_id}`">{{content.title}}</nuxt-link>
 											</h3>
 											<p>{{content.body}}</p>
 											<div class="art-tag">

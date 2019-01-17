@@ -34,7 +34,7 @@
 				<div class="btn-signs" v-else>
 					<ul>
 						<li><a @click="loginOAuth">ログイン</a></li>
-						<li><a class="fill" @click="registOAuth">新規登録</a></li>
+						<!-- <li><a class="fill" @click="registOAuth">新規登録</a></li> -->
 					</ul>
 				</div>
 

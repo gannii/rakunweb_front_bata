@@ -2190,3 +2190,21 @@ input[type="checkbox"] {
   color: #000;
 }
 */
+
+/* 記事詳細 */
+.sec.sec-article .sec-body h1, .sec.sec-article .sec-body h2, .sec.sec-article .sec-body h3, .sec.sec-article .sec-body h4, .sec.sec-article .sec-body h5, .sec.sec-article .sec-body h6 {
+  margin: 15px 0;
+  font-size: initial;
+  font-weight: bold;
+}
+
+.sec.sec-article .sec-body p {
+  margin: 15px 0;
+}
+
+.sec.sec-article .sec-body img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 15px 0;
+}

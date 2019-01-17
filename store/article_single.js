@@ -1,19 +1,14 @@
 
 export const state = () => ({
 
-	publish_list: null, // 公開中記事
-	draft_list: null // 下書き記事
+	detail: null
 
 })
 
 export const mutations = {
 
-	SET_PUBLISH_LIST: function (state, item) {
-		state.publish_list = item
-	},
-
-	SET_DRAFT_LIST: function (state, item) {
-		state.draft_list = item
+	SET_DETAIL: function (state, item) {
+		state.detail = item
 	}
 
 }
