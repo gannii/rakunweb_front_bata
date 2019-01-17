@@ -529,12 +529,12 @@ header#g-head.on {
   margin: 0 0 0 5px;
 }
 
-#init-setting .in .init-body table.defor tr td #avatar-icon {
+#init-setting .in .init-body table.defor tr td #profile_icon {
   display: none;
   margin: 0 0 10px;
 }
 
-#init-setting .in .init-body table.defor tr td #preview-cover {
+#init-setting .in .init-body table.defor tr td #preview_profile_back_image {
   display: none;
 }
 

@@ -48,7 +48,7 @@
 <!-- 最新記事 -->
           <div class="sec-body" v-if="$store.state.idx_tabs === 'latest_article'">
             
-            <article v-for="content in $store.state.idx_content" :key="content.article_id">
+            <article v-for="content in $store.state.data_latest_article" :key="content.article_id">
               <div class="art-in">
                 <div class="art-img">
                   <nuxt-link :to="`/artile/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
@@ -92,7 +92,7 @@
 <!-- 人気記事 -->
           <div class="sec-body" v-else-if="$store.state.idx_tabs === 'popular_article'">
             
-            <article v-for="content in $store.state.idx_content" :key="content.article_id">
+            <article v-for="content in $store.state.data_popular_article" :key="content.article_id">
               <div class="art-in">
                 <div class="art-img">
                   <nuxt-link :to="`/artile/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
@@ -140,7 +140,7 @@
 
 <!-- 人気ユーザ -->
           <div class="sec-body" v-else-if="$store.state.idx_tabs === 'popular_user'">
-            <article v-for="content in $store.state.idx_content" :key="content.account_name">
+            <article v-for="content in $store.state.data_popular_user" :key="content.account_name">
               <div class="art-in">
                 <div class="art-avatar">
                   <div class="avatar-md">
@@ -215,17 +215,60 @@ export default {
   },
 
   async fetch ({ app, store }) {
-    let { data } = await app.$axios.$post('/home/latest_article',
-      {
-        language: 1,
-        page_num: 1,
-        page_size: 4,
-        login_account_name: "yamada307"
-    })
-    console.log(data);
+
+    // if(!store.state.data_latest_article){
+
+      let [data_latest_article, data_popular_article, data_popular_tag, data_popular_user] = await Promise.all([
+
+          app.$axios.$post('/home/latest_article',
+          {
+            language: 1,
+            page_num: 1,
+            page_size: 4,
+            login_account_name: "yamada307"
+          }),
+
+          app.$axios.$post('/home/popular_article',
+          {
+            language: 1,
+            page_num: 1,
+            page_size: 4,
+            last_days: 100,
+            login_account_name: "yamada307"
+          }),
+
+          app.$axios.$post('/home/popular_tag',
+          {
+            language: 1,
+            page_num: 1,
+            page_size: 4,
+            last_days: 100,
+            tags_cnt: 4,
+            login_account_name: "yamada307"
+          }),
+
+          app.$axios.$post('/home/popular_user',
+          {
+            language: 1,
+            page_num: 1,
+            page_size: 4,
+            last_days: 100,
+            login_account_name: "yamada307"
+          })
+      ])
+
+      store.commit('SET_DATA_LATEST_ARTICLE', data_latest_article.data.article_info)
+
+      store.commit('SET_DATA_POPULAR_ARTICLE', data_popular_article.data.article_info)
+
+      store.commit('SET_DATA_POPULAR_TAG', data_popular_tag.data.article_info)
+
+      store.commit('SET_DATA_POPULAR_USER', data_popular_user.data.user_info)
+
+    // }
     store.commit('SET_DATA_TYPE', 'post')
-    store.commit('SET_IDX_CONTENT', data.article_info)
     store.commit('SET_IDX_TABS', 'latest_article')
+    
   },
 
   async asyncData({ app }) {
@@ -254,6 +297,9 @@ export default {
 
   // 最新記事取得
     get_latest_article(e){
+      this.$store.commit('SET_DATA_TYPE', 'post')
+      this.$store.commit('SET_IDX_TABS', 'latest_article')
+
       this.$axios.$post('/home/latest_article',
         {
           language: 1,
@@ -263,14 +309,15 @@ export default {
       })
       .then((res) => {
           console.log(res.data);
-          this.$store.commit('SET_DATA_TYPE', 'post')
-          this.$store.commit('SET_IDX_CONTENT', res.data.article_info)
-          this.$store.commit('SET_IDX_TABS', 'latest_article')
+          this.$store.commit('SET_DATA_LATEST_ARTICLE', res.data.article_info)
       })
     },
 
   // 人気記事取得
     get_popular_article(e){
+      this.$store.commit('SET_DATA_TYPE', 'post')
+      this.$store.commit('SET_IDX_TABS', 'popular_article')
+
       this.$axios.$post('/home/popular_article',
       {
         language: 1,
@@ -281,14 +328,15 @@ export default {
       })
       .then((res) => {
           console.log(res.data);
-          this.$store.commit('SET_DATA_TYPE', 'post')
-          this.$store.commit('SET_IDX_CONTENT', res.data.article_info)
-          this.$store.commit('SET_IDX_TABS', 'popular_article')
+          this.$store.commit('SET_DATA_POPULAR_ARTICLE', res.data.article_info)
       })
     },
 
   // 人気タグ取得
     get_popular_tag(e){
+      this.$store.commit('SET_DATA_TYPE', 'tag')
+      this.$store.commit('SET_IDX_TABS', 'popular_tag')
+
       this.$axios.$post('/home/popular_tag',
       {
         language: 1,
@@ -300,14 +348,15 @@ export default {
       })
       .then((res) => {
           console.log(res.data);
-          this.$store.commit('SET_DATA_TYPE', 'tag')
-          this.$store.commit('SET_IDX_CONTENT', res.data.article_info)
-          this.$store.commit('SET_IDX_TABS', 'popular_tag')
+          this.$store.commit('SET_DATA_POPULAR_TAG', res.data.article_info)
       })
     },
 
   // 人気ユーザー取得
     get_popular_user(e){
+      this.$store.commit('SET_DATA_TYPE', 'user')
+      this.$store.commit('SET_IDX_TABS', 'popular_user')
+
       this.$axios.$post('/home/popular_user',
       {
         language: 1,
@@ -318,9 +367,7 @@ export default {
       })
       .then((res) => {
           console.log(res.data);
-          this.$store.commit('SET_DATA_TYPE', 'user')
-          this.$store.commit('SET_IDX_CONTENT', res.data.user_info)
-          this.$store.commit('SET_IDX_TABS', 'popular_user')
+          this.$store.commit('SET_DATA_POPULAR_USER', res.data.user_info)
       })
     }
 

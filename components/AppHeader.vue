@@ -15,7 +15,7 @@
 					<ul>
 
 						<li v-if="$store.state.login_account">
-							<button id="btn-notice" @click="show_tippy">
+							<button id="btn-notice" @click="show_tippy_notice">
 								<span>
 									<img src="@/assets/svg/icon_notice.svg" alt="お知らせ">
 								</span>
@@ -23,7 +23,7 @@
 							</button>
 						</li>
 						<li v-if="$store.state.login_account">
-							<button id="btn-alert" @click="show_tippy">
+							<button id="btn-alert" @click="show_tippy_alert">
 								<span>
 									<img src="@/assets/svg/icon_alert.svg" alt="通知">
 								</span>
@@ -62,7 +62,7 @@
 
 
 		<div id="dtl-notice" class="tooltips">
-			<div class="in" v-if="$store.state.tippy">
+			<div class="in" v-if="$store.state.tippy_notice">
 				<dl>
 					<dt><span>全体お知らせ</span></dt>
 					<dd>
@@ -98,7 +98,7 @@
 
 
 		<div id="dtl-alert" class="tooltips">
-			<div class="in" v-if="$store.state.tippy">
+			<div class="in" v-if="$store.state.tippy_alert">
 				<ul>
 					<li>
 						<a href="">
@@ -224,7 +224,7 @@
 				</div>
 
 			</div>
-			<div class="dialog-close"><i class="far fa-times-circle"></i></div>
+			<!-- <div class="dialog-close"><i class="far fa-times-circle"></i></div> -->
 	
 		</div>
 
@@ -286,8 +286,10 @@ export default {
 
 							this.$store.commit("SET_INIT_SETTING", false);
 							$('#init-setting').fadeOut();
-							$('#overlay').fadeOut();
-						
+							$('#overlay').fadeOut().removeClass('disabled');
+
+							this.$router.push("/")
+							
 						});
 
 					})
@@ -321,8 +323,32 @@ export default {
 
 		},
 
-		show_tippy() {
-			this.$store.commit("SET_TIPPY", true)
+		show_tippy_notice() {
+			this.$store.commit("SET_TIPPY_NOTICE", true)
+
+			tippy('#btn-notice', {
+				content: document.querySelector('#dtl-notice'),
+				placement: 'bottom',
+				trigger: 'click',
+				animation: 'shift-toward',
+				arrow: true,
+				theme: 'light-border',
+				performance: true
+			})
+		},
+
+		show_tippy_alert() {
+			this.$store.commit("SET_TIPPY_ALERT", true)
+
+			tippy('#btn-alert', {
+				content: document.querySelector('#dtl-alert'),
+				placement: 'bottom',
+				trigger: 'click',
+				animation: 'shift-toward',
+				arrow: true,
+				theme: 'light-border',
+				performance: true
+			})
 		}
 	}
 

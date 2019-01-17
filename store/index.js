@@ -9,12 +9,18 @@ export const state = () => ({
 	init_setting: false,
 	b2c_oid: null,
 
-	tippy: false,
+	tippy_notice: false,
+	tippy_alert: false,
 
 // TOP
 	idx_tabs: null,
-	idx_content: [],
-	data_type: null
+	// idx_content: null,
+	data_type: null,
+
+	data_latest_article: null,
+	data_popular_article: null,
+	data_popular_tag: null,
+	data_popular_user: null
 
 })
 
@@ -43,19 +49,38 @@ export const mutations = {
 		state.b2c_oid = item
 	},
 
-	SET_TIPPY: function (state, item) {
-		state.tippy = item
+	SET_TIPPY_NOTICE: function (state, item) {
+		state.tippy_notice = item
+	},
+	SET_TIPPY_ALERT: function (state, item) {
+		state.tippy_alert = item
 	},
 
 // TOP
 	SET_IDX_TABS: function (state, item) {
 		state.idx_tabs = item
 	},
+/*
 	SET_IDX_CONTENT: function (state, item) {
 		state.idx_content = item
 	},
+*/
 	SET_DATA_TYPE: function (state, item) {
 		state.data_type = item
+	},
+
+
+	SET_DATA_LATEST_ARTICLE: function (state, item) {
+		state.data_latest_article = item
+	},
+	SET_DATA_POPULAR_ARTICLE: function (state, item) {
+		state.data_popular_article = item
+	},
+	SET_DATA_POPULAR_TAG: function (state, item) {
+		state.data_popular_tag = item
+	},
+	SET_DATA_POPULAR_USER: function (state, item) {
+		state.data_popular_user = item
 	}
 
 }
@@ -122,7 +147,7 @@ export const actions = {
 
 					commit("SET_INIT_SETTING", true);
 					$('#init-setting').fadeIn();
-					$('#overlay').fadeIn();
+					$('#overlay').fadeIn().addClass('disabled');
 
 			// account_nameが存在する場合
 				}else{
@@ -142,8 +167,6 @@ export const actions = {
 			})
 
 		}
-			
-		
 
 	},
 

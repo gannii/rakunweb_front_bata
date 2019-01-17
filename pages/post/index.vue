@@ -10,8 +10,8 @@
 					<dl>
 						<dt>&nbsp;</dt>
 						<dd>
-							<input id="post_title" class="h-md" type="text" placeholder="タイトル" />
-							<!-- <p class="error" v-if="artTitleError">{{artTitleError}}</p> -->
+							<input id="post_title" v-model="postTitle" class="h-md" type="text" placeholder="タイトル" />
+							<p class="error" v-if="error_postTitle">{{error_postTitle}}</p>
 						</dd>
 
 						<dt>&nbsp;</dt>
@@ -26,7 +26,7 @@
 						<dt id="insertEditor">&nbsp;</dt>
 						<dd id="code-wrap">
 							<textarea id="post_content"></textarea>
-							<!-- <p class="error" v-if="artContentError">{{artContentError}}</p> -->
+							<!-- <p class="error" v-if="error_postContent">{{error_postContent}}</p> -->
 						</dd>
 					</dl>
 					
@@ -72,6 +72,14 @@
 
 export default {
 	
+	data() {
+		return{
+			postTitle: '',
+
+			error_postTitle: null
+		}
+	},
+
 	head () {
 		return {
 			title: '投稿',
@@ -101,64 +109,95 @@ export default {
 	methods: {
 
 // 公開
-		post_publish(e){
+		async post_publish(e){
 
-		// タイトル
-			var $postTitle = $('#post_title').val();
+			if(!this.postTitle){
 
-		// タグ
-			var $postCat = [];
-			var $postCatLi = $('#post_cat').find('li b');
-			$postCatLi.each(function(i){
-				// $postCat['tag' + i] = $(this).text();
-				$postCat.push({'tag': $(this).text()});
-			});
+				this.error_postTitle = "タイトルを入力してください"
 
-		// 本文
-			var $postContent = $('#post_content').val();
+			}else{
 
-		// API Call
-			this.$axios.$post('/article_management/post_publish',
-			{
-				login_account_name: this.$store.state.login_account.account_name,
-				title: $postTitle,
-				tag: $postCat,
-				body: $postContent,
-				language: 1
-			})
-			.then((res) => {
-				console.log(res.data);
-			})
+				$('#btn-release').css({"pointer-events": "none"});
+
+				this.error_postTitle = null
+
+			// タイトル
+				var $postTitle = this.postTitle;
+
+			// タグ
+				var $postCat = [];
+				var $postCatLi = $('#post_cat').find('li b');
+				$postCatLi.each(function(i){
+					// $postCat['tag' + i] = $(this).text();
+					$postCat.push({'tag': $(this).text()});
+				});
+
+			// 本文
+				var $postContent = $('#post_content').val();
+
+			/* API Call */
+				await this.$axios.$post('/article_management/post_publish',
+				{
+					login_account_name: this.$store.state.login_account.account_name,
+					title: $postTitle,
+					tag: $postCat,
+					body: $postContent,
+					language: 1
+				})
+			/*
+				.then((res) => {
+					console.log(res.data);
+				})
+			*/
+
+				this.$router.push("/article_management/")
+
+			}
+
 		},
 
 // 下書き
-		post_draft(e){
+		async post_draft(e){
 
-		// タイトル
-			var $postTitle = $('#post_title').val();
+			if(!this.postTitle){
 
-		// タグ
-			var $postCat = [];
-			var $postCatLi = $('#post_cat').find('li b');
-			$postCatLi.each(function(i){
-				$postCat['tag' + i] = $(this).text();
-			});
+				this.error_postTitle = "タイトルを入力してください"
 
-		// 本文
-			var $postContent = $('#post_content').val();
+			}else{
 
-		// API Call	
-			this.$axios.$post('/article_management/post_draft',
-			{
-				login_account_name: this.$store.state.login_account.account_name,
-				title: $postTitle,
-				tag: $postCat,
-				body: $postContent,
-				language: 1
-			})
-			.then((res) => {
-				console.log(res.data);
-			})
+				$('#btn-submenu').css({"pointer-events": "none"});
+
+			// タイトル
+				var $postTitle = $('#post_title').val();
+
+			// タグ
+				var $postCat = [];
+				var $postCatLi = $('#post_cat').find('li b');
+				$postCatLi.each(function(i){
+					$postCat['tag' + i] = $(this).text();
+				});
+
+			// 本文
+				var $postContent = $('#post_content').val();
+
+			// API Call	
+				await this.$axios.$post('/article_management/post_draft',
+				{
+					login_account_name: this.$store.state.login_account.account_name,
+					title: $postTitle,
+					tag: $postCat,
+					body: $postContent,
+					language: 1
+				})
+			/*
+				.then((res) => {
+					console.log(res.data);
+				})
+			*/
+				this.$router.push("/article_management/")
+
+			}
+
 		}
 
 

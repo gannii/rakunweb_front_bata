@@ -93,11 +93,19 @@ module.exports = {
       home: '/'
     },
     strategies: {
-      azure: {
+
+      azureSignIn: {
+        authorization_endpoint: 'https://seqdiob2c.b2clogin.com/seqdiob2c.onmicrosoft.com/oauth2/v2.0/authorize',
+        _provider: '~/auth/azure-provide.js',
+        _scheme: '~/auth/azure-scheme.js'
+      },
+
+      azureSignUp: {
         authorization_endpoint: 'https://seqdiob2c.b2clogin.com/seqdiob2c.onmicrosoft.com/oauth2/v2.0/authorize',
         _provider: '~/auth/azure-provide.js',
         _scheme: '~/auth/azure-scheme.js'
       }
+      
     }   
   },
 

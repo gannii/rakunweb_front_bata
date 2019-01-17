@@ -35,7 +35,9 @@ $(function(){
 	});
 
 	$overlay.on('click', function(){
-		resetMenu();
+		if(!$('#overlay').hasClass('disabled')){
+			resetMenu();
+		}
 	});
 
 	$gMenu.find('.hasChild em').on('click', function(){
@@ -57,28 +59,10 @@ $(function(){
 		$overlay.fadeOut();
 	}
 
-	tippy('#btn-notice', {
-		content: document.querySelector('#dtl-notice'),
-		placement: 'bottom',
-		trigger: 'click',
-		animation: 'shift-toward',
-		arrow: true,
-		theme: 'light-border',
-		performance: true
-	})
-
-	tippy('#btn-alert', {
-		content: document.querySelector('#dtl-alert'),
-		placement: 'bottom',
-		trigger: 'click',
-		animation: 'shift-toward',
-		arrow: true,
-		theme: 'light-border',
-		performance: true
-	})
-
 	$('#overlay, .dialog-close').on('click', function(){
-		dialogClose();
+		if(!$('#overlay').hasClass('disabled')){
+			dialogClose();
+		}
 	});
 
 
