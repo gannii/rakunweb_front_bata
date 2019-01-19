@@ -9,12 +9,12 @@
 
 					<div class="sec-head">
 
-						<time datetime="2019-01-01"><i class="far fa-clock"></i>{{$store.state.article_single.detail.published_at}}</time>
+						<time datetime="2019-01-01"><i class="far fa-clock"></i>{{$store.state.article_single.data_article_detail.published_at}}</time>
 
-						<h3 class="h-lg">{{$store.state.article_single.detail.title}}</h3>
+						<h3 class="h-lg">{{$store.state.article_single.data_article_detail.title}}</h3>
 
 						<div class="art-tag">
-							<span v-for="tag in $store.state.article_single.detail.tags" :key="tag.article_id">#{{tag.tag}}</span>
+							<span v-for="tag in $store.state.article_single.data_article_detail.tags">#{{tag.tag}}</span>
 						</div>
 
 						<div class="icon-wrap">
@@ -67,9 +67,9 @@
 						<div class="avatar">
 							<div class="art-avatar">
 								<div class="avatar-md">
-									<nuxt-link :to="`/profile/${$store.state.article_single.detail.account_name}`">
+									<nuxt-link :to="`/profile/${$store.state.article_single.data_article_detail.account_name}`">
 										<span>
-											<img :src="`${$store.state.article_single.detail.user.profile_icon}`" :alt="`${$store.state.article_single.detail.account_name}`">
+											<img :src="`${$store.state.article_single.data_article_detail.user.profile_icon}`" :alt="`${$store.state.article_single.data_article_detail.account_name}`">
 										</span>
 									<!--
 										<i>
@@ -82,15 +82,15 @@
 							<div class="art-avatar-dtl">
 								<div class="art-info">
 									<h3 class="h-sm">
-										<a href="#">{{$store.state.article_single.detail.account_name}}</a>
+										<a href="#">{{$store.state.article_single.data_article_detail.account_name}}</a>
 									</h3>
 								</div>
 								<div class="art-meta">
 									<div class="art-cnts">
 										<ul>
-											<li><img src="@/assets/svg/icon_prof-follower.svg" alt=""><b>{{$store.state.article_single.detail.user.followed_count}}</b></li>
-											<li><img src="@/assets/svg/icon_post.svg" alt=""><b>{{$store.state.article_single.detail.user.articles_count}}</b></li>
-											<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.detail.user.appraised_value}}</b></li>
+											<li><img src="@/assets/svg/icon_prof-follower.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.followed_count}}</b></li>
+											<li><img src="@/assets/svg/icon_post.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.articles_count}}</b></li>
+											<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.appraised_value}}</b></li>
 										</ul>
 									</div>
 								</div>
@@ -107,7 +107,7 @@
 						<div class="icon-wrap">
 							<div class="art-cnts">
 								<ul>
-									<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.detail.appraised_value}}</b></li>
+									<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.data_article_detail.appraised_value}}</b></li>
 								</ul>
 							</div>
 							<div class="sns">
@@ -129,9 +129,9 @@
 						<div class="thisuser">
 							<div class="art-avatar">
 								<div class="avatar-md">
-									<nuxt-link :to="`/profile/${$store.state.article_single.detail.user.account_name}`">
+									<nuxt-link :to="`/profile/${$store.state.article_single.data_article_detail.user.account_name}`">
 										<span>
-											<img :src="`${$store.state.article_single.detail.user.profile_icon}`" :alt="`${$store.state.article_single.detail.account_name}`">
+											<img :src="`${$store.state.article_single.data_article_detail.user.profile_icon}`" :alt="`${$store.state.article_single.data_article_detail.account_name}`">
 										</span>
 									<!--
 										<i>
@@ -143,16 +143,16 @@
 							</div>
 							<div class="art-info">
 								<h3 class="h-sm">
-									<a href="#">{{$store.state.article_single.detail.user.account_name}}</a>
+									<a href="#">{{$store.state.article_single.data_article_detail.user.account_name}}</a>
 								</h3>
-								<p>{{$store.state.article_single.detail.user.self_introduction}}</p>
+								<p>{{$store.state.article_single.data_article_detail.user.self_introduction}}</p>
 							</div>
 							<div class="art-meta">
 								<div class="art-cnts">
 									<ul>
-										<li><img src="@/assets/svg/icon_prof-follower.svg" alt=""><b>{{$store.state.article_single.detail.user.followed_count}}</b></li>
-										<li><img src="@/assets/svg/icon_post.svg" alt=""><b>{{$store.state.article_single.detail.user.articles_count}}</b></li>
-										<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.detail.user.appraised_value}}</b></li>
+										<li><img src="@/assets/svg/icon_prof-follower.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.followed_count}}</b></li>
+										<li><img src="@/assets/svg/icon_post.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.articles_count}}</b></li>
+										<li><img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{$store.state.article_single.data_article_detail.user.appraised_value}}</b></li>
 									</ul>
 								</div>
 							</div>
@@ -174,7 +174,7 @@
 							<ul>
 								<li class="active">
 									<div class="li-in">
-										<img src="@/assets/svg/icon_comment.svg" alt=""><img src="@/assets/svg/icon_comment-white.svg" alt=""><b>（4）</b>
+										<img src="@/assets/svg/icon_comment.svg" alt=""><img src="@/assets/svg/icon_comment-white.svg" alt=""><b>（{{$store.state.article_single.data_article_comment.length}}）</b>
 									</div>
 								</li>
 								<li>
@@ -199,140 +199,48 @@
 							<div id="view-comment" class="view show">
 								
 								<div class="view-head">
-									<textarea id="post-comment" rows="5" placeholder="コメント"></textarea>
+									<p class="error" v-if="error_postComment">{{error_postComment}}</p>
+									<textarea id="post-comment" v-model="postComment" rows="5" placeholder="コメント"></textarea>
 									<div class="btns">
-										<button><img src="@/assets/svg/icon_pen.svg" alt=""></button>
+										<button @click="fn_postComment"><img src="@/assets/svg/icon_pen.svg" alt=""></button>
 									</div>
 								</div>
 
 								<div class="view-body">
 									
 									<div id="comment-list">
-										<ul>
-											<li>
-												<div id="1" class="li-in">
+										<p v-if="$store.state.article_single.data_article_comment.length == 0">現在、コメントはありません</p>
+										<ul v-else>
+
+											<li v-for="content in reverseItems" :key="content.comment_id">
+												<div :id="`${content.comment_id}`" class="li-in">
 													<div class="art-user">
 														<div class="avatar-sm">
-															<a href="./profile/">
+															<nuxt-link :to="`/profile/${content.account_name}`">
 																<span>
-																	<img src="@/assets/img/sample/avatar/10psn.jpg" alt="ゲーマータカピ">
+																	<img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
 																</span>
-																<em>ゲーマータカピ</em>
-															</a>
+																<em>{{content.account_name}}</em>
+															</nuxt-link>
 														</div>
 													</div>
 													<div class="art-comment">
 														<div class="com-dtl">
 															<div class="com-meta">
-																<strong>#1</strong>
-																<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
+																<strong>#{{content.comment_id}}</strong>
+																<time :datetime="`${content.created_at}`"><i class="far fa-clock"></i>{{content.created_at}}</time>
 															</div>
-															<p>投稿コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容がここに入ります。</p>
+															<p>{{content.comment}}</p>
 														</div>
 														<div class="art-cnts">
 															<ul>
 																<li>
-																	<img src="@/assets/svg/icon_like.svg" alt=""><b>000</b>
+																	<img src="@/assets/svg/icon_like.svg" alt=""><b>{{content.reviews_count}}</b>
 																</li>
 																<li>
-																	<img src="@/assets/svg/icon_rakun.svg" alt=""><b>9,999,999</b>
+																	<img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b>
 																</li>
-																<li class="sub-tippy icon-sm" data-this-com="#1">
-																	<span>
-																		<img src="@/assets/svg/icon_submenu.svg" alt="">
-																	</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</li>
-											<li class="delete">
-												<div id="2" class="li-in">
-													<div class="art-user">
-														<div class="avatar-sm">
-															<a>
-																<span></span>
-															</a>
-														</div>
-													</div>
-													<div class="art-comment">
-														<div class="com-dtl">
-															<div class="com-meta">
-																<strong>#2</strong>
-															</div>
-														</div>
-													</div>
-													<div class="com-delete"><span>該当コメントは削除されました。</span></div>
-												</div>
-											</li>
-											<li>
-												<div id="3" class="li-in">
-													<div class="art-user">
-														<div class="avatar-sm">
-															<a href="./profile/">
-																<span>
-																	<img src="@/assets/img/sample/avatar/1psn.jpg" alt="nora aya">
-																</span>
-																<em>nora aya</em>
-															</a>
-														</div>
-													</div>
-													<div class="art-comment">
-														<div class="com-dtl">
-															<div class="com-meta">
-																<strong>#3</strong>
-																<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
-															</div>
-															<p>投稿コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容がここに入ります。</p>
-														</div>
-														<div class="art-cnts">
-															<ul>
-																<li>
-																	<img src="@/assets/svg/icon_like.svg" alt=""><b>000</b>
-																</li>
-																<li>
-																	<img src="@/assets/svg/icon_rakun.svg" alt=""><b>9,999,999</b>
-																</li>
-																<li class="sub-tippy icon-sm" data-this-com="#3">
-																	<span>
-																		<img src="@/assets/svg/icon_submenu.svg" alt="">
-																	</span>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div id="4" class="li-in">
-													<div class="art-user">
-														<div class="avatar-sm">
-															<a href="./profile/">
-																<span>
-																	<img src="@/assets/img/sample/avatar/5psn.jpg" alt="シンニチロー">
-																</span>
-																<em>イワモトシンイチロウ</em>
-															</a>
-														</div>
-													</div>
-													<div class="art-comment">
-														<div class="com-dtl">
-															<div class="com-meta">
-																<strong>#4</strong>
-																<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
-															</div>
-															<p><button class="comment-tippy" data-com="#1">#1</button><button class="comment-tippy" data-com="#3">#3</button>投稿コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容コメント内容がここに入ります。</p>
-														</div>
-														<div class="art-cnts">
-															<ul>
-																<li>
-																	<img src="@/assets/svg/icon_like.svg" alt=""><b>000</b>
-																</li>
-																<li>
-																	<img src="@/assets/svg/icon_rakun.svg" alt=""><b>9,999,999</b>
-																</li>
-																<li class="sub-tippy icon-sm" data-this-com="#4">
+																<li class="sub-tippy icon-sm" @click="showSubTippy" :data-this-com="`#${content.comment_id}`">
 																	<span>
 																		<img src="@/assets/svg/icon_submenu.svg" alt="">
 																	</span>
@@ -378,26 +286,6 @@
 											</div>
 										</div>
 									</article>
-									<article>
-										<div class="art-in">
-											<div class="art-avatar">
-												<div class="avatar-md">
-													<a href="./profile/">
-														<span>
-															<img src="@/assets/img/sample/avatar/8psn.jpg" alt="">
-														</span>
-													</a>
-												</div>
-											</div>
-											<div class="art-info pad-right-sm">
-												<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
-												<h3 class="h-sm">
-													<a href="#">CRYPT Holiday</a>
-												</h3>
-												<div class="art-delete"><em class="icon-minus"></em></div>
-											</div>
-										</div>
-									</article>
 
 								</div>
 
@@ -430,46 +318,6 @@
 											</div>
 										</div>
 									</article>
-									<article>
-										<div class="art-in">
-											<div class="art-avatar">
-												<div class="avatar-md">
-													<a href="./profile/">
-														<span>
-															<img src="@/assets/img/sample/avatar/8psn.jpg" alt="">
-														</span>
-													</a>
-												</div>
-											</div>
-											<div class="art-info pad-right-sm">
-												<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
-												<h3 class="h-sm">
-													<a href="#">CRYPT Holiday</a>
-												</h3>
-												<div class="art-delete"><em class="icon-minus"></em></div>
-											</div>
-										</div>
-									</article>
-									<article>
-										<div class="art-in">
-											<div class="art-avatar">
-												<div class="avatar-md">
-													<a href="./profile/">
-														<span>
-															<img src="@/assets/img/sample/avatar/5psn.jpg" alt="シンニチロー">
-														</span>
-													</a>
-												</div>
-											</div>
-											<div class="art-info pad-right-sm">
-												<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
-												<h3 class="h-sm">
-													<a href="#">イワモトシンイチロウ</a>
-												</h3>
-												<div class="art-delete"><em class="icon-minus"></em></div>
-											</div>
-										</div>
-									</article>
 
 								</div>
 							</div><!-- #view-share -->
@@ -487,9 +335,10 @@
 
 <div id="add-comment" class="dialog">
 	<div class="in">
-		<textarea rows="5" placeholder="コメント"></textarea>
+		<p class="error" v-if="error_addComment">{{error_addComment}}</p>
+		<textarea rows="5" v-model="addComment" placeholder="コメント"></textarea>
 		<div class="btns">
-			<button><img src="@/assets/svg/icon_pen.svg" alt=""></button>
+			<button @click="fn_addComment"><img src="@/assets/svg/icon_pen.svg" alt=""></button>
 		</div>
 	</div>
 </div>
@@ -503,9 +352,19 @@
 
 export default {
 
+	data() {
+		return{
+      		postComment: '',
+			error_postComment: null,
+
+			addComment: '',
+			error_addComment: null
+		}
+	},
+
 	head () {
 		return {
-			title: this.$store.state.article_single.detail.title,
+			title: this.$store.state.article_single.data_article_detail.title,
 			titleTemplate: '%s - RAKUN',
 			script: [
 				
@@ -521,22 +380,38 @@ export default {
 
 		// let { data } = await app.$axios.$get('/article/' + params.article_id + '/' + store.state.login_account.account_name)
 
-		let { data } = await app.$axios.$get('/article/' + params.article_id + '/yamada307')
+		let [data_article_detail, data_article_comment] = await Promise.all([
 
-		console.log(data);
+			app.$axios.$get('/article/' + params.article_id + '/yamada307'),
+			app.$axios.$post('/article/comment/' + params.article_id, 
+          	{
+				"page_num": 1,
+				"page_size": 4
+			})
 
-		store.commit('article_single/SET_DETAIL', data)
+		])
+
+		console.log(data_article_detail.data);
+		console.log(data_article_comment.data.comment_info);
+
+		store.commit('article_single/SET_ARTICLE_DETAIL', data_article_detail.data)
+		store.commit('article_single/SET_ARTICLE_COMMENT', data_article_comment.data.comment_info)
 
 	},
 
 	computed:{
 
-	    ARTICLE_DETAIL_BODY(){
+	    ARTICLE_DETAIL_BODY() {
 	    	if(process.browser){
-		    	var body = marked(this.$store.state.article_single.detail.body);
+		    	var body = marked(this.$store.state.article_single.data_article_detail.body);
 				return body
 			}
-	    }
+	    },
+
+	// コメント ソート
+	    reverseItems() {
+        	return this.$store.state.article_single.data_article_comment.slice().reverse();
+    	}
     
 	},
 
@@ -548,6 +423,91 @@ export default {
 
 	methods: {
 
+	// コメント投稿
+		fn_postComment(){
+			if(!this.postComment){
+				this.error_postComment = 'コメントを入力して下さい'
+			}else{
+				this.error_postComment = null
+				this.$axios.$post('/article/comment', 
+	          	{
+					"account_name": this.$store.state.login_account.account_name,
+					"article_id": this.$route.params.article_id,
+					"comment": this.postComment
+				})
+				.then((res) => {
+					this.$axios.$post('/article/comment/' + this.$route.params.article_id, 
+		          	{
+						"page_num": 1,
+						"page_size": 4
+					})
+					.then((res) => {
+						console.log(res);
+						this.postComment = ''
+						this.$store.commit('article_single/SET_ARTICLE_COMMENT', res.data.comment_info)
+					})				
+				})
+			}
+		},
+
+	// コメント サブメニュー
+		showSubTippy(e) {
+
+			var trg = e.currentTarget.parentNode.querySelector(":scope > li.sub-tippy");
+
+    		var dataThisCom = trg.getAttribute("data-this-com");
+
+			tippy(trg, {
+				content: '<div class="sub-tip-menu"><ul><li class="btn-add-comment" data-num="' + dataThisCom + '">コメント投稿</li><li>いいね！取り消し</li><li>通報</li><li>ユーザブロック</li><li>コメント削除</li></ul></div>',
+				placement: 'right',
+				trigger: 'click',
+				animation: 'shift-toward',
+				arrow: true,
+				theme: 'light-border'
+				// hideOnClick: 'persistent'
+			})
+    	},
+
+	// コメントに対するコメント投稿
+		fn_addComment(){
+
+			if(!this.addComment){
+
+				this.error_addComment = 'コメントを入力して下さい'
+
+			}else{
+
+				this.error_addComment = null
+
+				var addCommentBody = this.addComment;
+					addCommentBody = addCommentBody.replace(/#\d+/g, '<button class="comment-tippy" data-com="#1">#1</button>');
+
+				console.log(addCommentBody);
+
+				this.$axios.$post('/article/comment', 
+	          	{
+					"account_name": this.$store.state.login_account.account_name,
+					"article_id": this.$route.params.article_id,
+					"comment": this.addComment
+				})
+				.then((res) => {
+					this.$axios.$post('/article/comment/' + this.$route.params.article_id, 
+		          	{
+						"page_num": 1,
+						"page_size": 4
+					})
+					.then((res) => {
+						console.log(res);
+						this.addComment = ''
+						this.$store.commit('article_single/SET_ARTICLE_COMMENT', res.data.comment_info)
+
+						$('.dialog').hide();
+						$('#overlay').fadeOut();
+					})				
+				})
+
+			}
+		}
 	}
 
 }

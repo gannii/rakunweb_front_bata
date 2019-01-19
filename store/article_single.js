@@ -1,14 +1,18 @@
 
 export const state = () => ({
 
-	detail: null
+	data_article_detail: null,
+	data_article_comment: null
 
 })
 
 export const mutations = {
 
-	SET_DETAIL: function (state, item) {
-		state.detail = item
+	SET_ARTICLE_DETAIL: function (state, item) {
+		state.data_article_detail = item
+	},
+	SET_ARTICLE_COMMENT: function (state, item) {
+		state.data_article_comment = item
 	}
 
 }
@@ -53,6 +57,7 @@ export const actions = {
 
 
 	// sub-tippy
+	/*
 		var $subTippy = $('.sub-tippy');
 		$subTippy.each(function(){
 
@@ -68,7 +73,8 @@ export const actions = {
 				// hideOnClick: 'persistent'
 			})
 		});
-
+	*/
+	
 		$(document).on('click', '.btn-add-comment', function(){
 			var idx = $(this).attr('data-num');
 			$('#add-comment').find('textarea').val(idx + ' ');
