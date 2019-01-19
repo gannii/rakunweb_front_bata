@@ -2,7 +2,9 @@
 export const state = () => ({
 
 	data_article_detail: null,
-	data_article_comment: null
+	data_article_comment: null,
+	data_article_review: null,
+	data_article_share: null
 
 })
 
@@ -13,6 +15,22 @@ export const mutations = {
 	},
 	SET_ARTICLE_COMMENT: function (state, item) {
 		state.data_article_comment = item
+	},
+	SET_ARTICLE_REVIEW: function (state, item) {
+		state.data_article_review = item
+	},
+	SET_ARTICLE_SHARE: function (state, item) {
+		state.data_article_share = item
+	},
+
+	UPDATE_ARTICLE_DETAIL_IS_REVIEWED: function (state, item) {
+		state.data_article_detail.is_reviewed = item
+	},
+	UPDATE_ARTICLE_DETAIL_IS_SHARED: function (state, item) {
+		state.data_article_detail.is_shared = item
+	},
+	UPDATE_ARTICLE_DETAIL_IS_CLIPED: function (state, item) {
+		state.data_article_detail.is_clipped = item
 	}
 
 }
@@ -77,7 +95,7 @@ export const actions = {
 	
 		$(document).on('click', '.btn-add-comment', function(){
 			var idx = $(this).attr('data-num');
-			$('#add-comment').find('textarea').val(idx + ' ');
+			$('#add-comment').attr('data-idx', idx).find('textarea').val(idx + ' ');
 			$('#add-comment').fadeIn();
 			$('#overlay').fadeIn();
 		});

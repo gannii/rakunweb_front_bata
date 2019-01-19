@@ -50,10 +50,16 @@
             
             <article v-for="content in $store.state.data_latest_article" :key="content.article_id">
               <div class="art-in">
-                <div class="art-img">
+                
+                <div class="art-img" v-if="content.eyecatch_uri">
                   <nuxt-link :to="`/article/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
                   </nuxt-link>
                 </div>
+                <div class="art-img" v-else>
+                  <nuxt-link :to="`/article/${content.article_id}`" class="noimage">
+                  </nuxt-link>
+                </div>
+
                 <div class="art-dtl">
                   <h3 class="h-sm">
                     <nuxt-link :to="`/article/${content.article_id}`">{{content.title}}</nuxt-link>
@@ -67,9 +73,14 @@
                   <div class="art-user">
                     <div class="avatar-sm">
                       <nuxt-link :to="`/profile/${content.account_name}`">
-                        <span>
+                        
+                        <span v-if="content.user.profile_icon">
                           <img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
                         </span>
+                        <span v-else>
+                          <img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+                        </span>
+
                         <em>{{content.account_name}}</em>
                       </nuxt-link>
                     </div>
@@ -94,10 +105,16 @@
             
             <article v-for="content in $store.state.data_popular_article" :key="content.article_id">
               <div class="art-in">
-                <div class="art-img">
+                
+                <div class="art-img" v-if="content.eyecatch_uri">
                   <nuxt-link :to="`/article/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
                   </nuxt-link>
                 </div>
+                <div class="art-img" v-else>
+                  <nuxt-link :to="`/article/${content.article_id}`" class="noimage">
+                  </nuxt-link>
+                </div>
+
                 <div class="art-dtl">
                   <h3 class="h-sm">
                     <nuxt-link :to="`/article/${content.article_id}`">{{content.title}}</nuxt-link>
@@ -111,9 +128,14 @@
                   <div class="art-user">
                     <div class="avatar-sm">
                       <nuxt-link :to="`/profile/${content.account_name}`">
-                        <span>
-                          <img :src="`${content.profile_icon}`" :alt="`${content.account_name}`">
+
+                        <span v-if="content.user.profile_icon">
+                          <img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
                         </span>
+                        <span v-else>
+                          <img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+                        </span>
+
                         <em>{{content.account_name}}</em>
                       </nuxt-link>
                     </div>
@@ -145,9 +167,14 @@
                 <div class="art-avatar">
                   <div class="avatar-md">
                     <nuxt-link :to="`/profile/${content.account_name}`">
-                      <span>
-                        <img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
+
+                      <span v-if="content.profile_icon">
+                          <img :src="`${content.profile_icon}`" :alt="`${content.nickname}`">
                       </span>
+                      <span v-else>
+                        <img src="@/assets/img/user-noimage.png" :alt="`${content.nickname}`">
+                      </span>
+
                       <i>
                         <img src="@/assets/svg/icon_star.svg" alt="">
                       </i>
@@ -224,7 +251,7 @@ export default {
           {
             language: 1,
             page_num: 1,
-            page_size: 4,
+            page_size: 10,
             login_account_name: "yamada307"
           }),
 
@@ -232,7 +259,7 @@ export default {
           {
             language: 1,
             page_num: 1,
-            page_size: 4,
+            page_size: 10,
             last_days: 100,
             login_account_name: "yamada307"
           }),
@@ -241,7 +268,7 @@ export default {
           {
             language: 1,
             page_num: 1,
-            page_size: 4,
+            page_size: 10,
             last_days: 100,
             tags_cnt: 4,
             login_account_name: "yamada307"
@@ -251,7 +278,7 @@ export default {
           {
             language: 1,
             page_num: 1,
-            page_size: 4,
+            page_size: 10,
             last_days: 100,
             login_account_name: "yamada307"
           })
@@ -307,7 +334,7 @@ export default {
         {
           language: 1,
           page_num: 1,
-          page_size: 4,
+          page_size: 10,
           login_account_name: "yamada307"
       })
       .then((res) => {
@@ -325,7 +352,7 @@ export default {
       {
         language: 1,
         page_num: 1,
-        page_size: 4,
+        page_size: 10,
         last_days: 100,
         login_account_name: "yamada307"
       })
@@ -344,7 +371,7 @@ export default {
       {
         language: 1,
         page_num: 1,
-        page_size: 4,
+        page_size: 10,
         last_days: 100,
         tags_cnt: 4,
         login_account_name: "yamada307"
@@ -364,7 +391,7 @@ export default {
       {
         language: 1,
         page_num: 1,
-        page_size: 4,
+        page_size: 10,
         last_days: 100,
         login_account_name: "yamada307"
       })

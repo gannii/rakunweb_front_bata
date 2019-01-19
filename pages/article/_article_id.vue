@@ -20,21 +20,39 @@
 						<div class="icon-wrap">
 							<div class="btn-act">
 								<ul>
-									<li>
-										<span>
+									<li v-if="$store.state.article_single.data_article_detail.is_reviewed == 0">
+										<span @click="fn_review">
 											<img src="@/assets/svg/icon_like.svg" alt="">
 										</span>
 									</li>
-									<li>
+									<li class="on" v-else>
 										<span>
+											<img src="@/assets/svg/icon_like-white.svg" alt="">
+										</span>
+									</li>
+
+									<li v-if="$store.state.article_single.data_article_detail.is_shared == 0">
+										<span @click="fn_share">
 											<img src="@/assets/svg/icon_share.svg" alt="">
 										</span>
 									</li>
-									<li>
+									<li class="on" v-else>
 										<span>
+											<img src="@/assets/svg/icon_share-white.svg" alt="">
+										</span>
+									</li>
+
+									<li v-if="$store.state.article_single.data_article_detail.is_clipped == 0">
+										<span @click="fn_clip">
 											<img src="@/assets/svg/icon_clip.svg" alt="">
 										</span>
 									</li>
+									<li class="on" v-else>
+										<span>
+											<img src="@/assets/svg/icon_clip-white.svg" alt="">
+										</span>
+									</li>
+
 									<li>
 										<span>
 											<img src="@/assets/svg/icon_link.svg" alt="">
@@ -179,12 +197,12 @@
 								</li>
 								<li>
 									<div class="li-in">
-										<img src="@/assets/svg/icon_like.svg" alt=""><img src="@/assets/svg/icon_like-white.svg" alt=""><b>（2）</b>
+										<img src="@/assets/svg/icon_like.svg" alt=""><img src="@/assets/svg/icon_like-white.svg" alt=""><b>（{{Object.keys(this.$store.state.article_single.data_article_review).length}}）</b>
 									</div>
 								</li>
 								<li>
 									<div class="li-in">
-										<img src="@/assets/svg/icon_share.svg" alt=""><img src="@/assets/svg/icon_share-white.svg" alt=""><b>（3）</b>
+										<img src="@/assets/svg/icon_share.svg" alt=""><img src="@/assets/svg/icon_share-white.svg" alt=""><b>（{{Object.keys($store.state.article_single.data_article_share).length}}）</b>
 									</div>
 								</li>
 							</ul>
@@ -212,7 +230,7 @@
 										<p v-if="$store.state.article_single.data_article_comment.length == 0">現在、コメントはありません</p>
 										<ul v-else>
 
-											<li v-for="content in reverseItems" :key="content.comment_id">
+											<li v-for="content in $store.state.article_single.data_article_comment" :key="content.comment_id">
 												<div :id="`${content.comment_id}`" class="li-in">
 													<div class="art-user">
 														<div class="avatar-sm">
@@ -230,7 +248,7 @@
 																<strong>#{{content.comment_id}}</strong>
 																<time :datetime="`${content.created_at}`"><i class="far fa-clock"></i>{{content.created_at}}</time>
 															</div>
-															<p>{{content.comment}}</p>
+															<p v-html="content.comment">{{content.comment}}</p>
 														</div>
 														<div class="art-cnts">
 															<ul>
@@ -262,25 +280,25 @@
 							<div id="view-like" class="view">
 								
 								<div class="view-body">
+									
+									<p v-if="Object.keys(this.$store.state.article_single.data_article_review).length == 0">現在、いいねはありません</p>
 
-									<article>
+									<article v-else v-for="content in $store.state.article_single.data_article_review" :key="content.article_id">
 										<div class="art-in">
 											<div class="art-avatar">
 												<div class="avatar-md">
-													<a href="./profile/">
+													<nuxt-link :to="`/profile/${content.review_account_name}`">
 														<span>
-															<img src="@/assets/img/sample/avatar/11psn.jpg" alt="">
+															<img :src="`${content.reviewing_user.profile_icon}`" :alt="`${content.review_account_name}`">
 														</span>
-														<i>
-															<img src="@/assets/svg/icon_star.svg" alt="">
-														</i>
-													</a>
+														<em>{{content.review_account_name}}</em>
+													</nuxt-link>
 												</div>
 											</div>
 											<div class="art-info pad-right-sm">
-												<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
+												<time :datetime="`${content.created_at}`"><i class="far fa-clock"></i>{{content.created_at}}</time>
 												<h3 class="h-sm">
-													<a href="#">cos fifty</a>
+													<a href="#">{{content.review_account_name}}</a>
 												</h3>
 												<div class="art-delete"><em class="icon-minus"></em></div>
 											</div>
@@ -294,25 +312,25 @@
 
 							<div id="view-share" class="view">
 								<div class="view-body">
+									
+									<p v-if="Object.keys($store.state.article_single.data_article_share).length == 0">現在、シェアはされていません</p>
 
-									<article>
+									<article v-else v-for="content in $store.state.article_single.data_article_share">
 										<div class="art-in">
 											<div class="art-avatar">
 												<div class="avatar-md">
-													<a href="./profile/">
+													<nuxt-link :to="`/profile/${content.share_account_name}`">
 														<span>
-															<img src="@/assets/img/sample/avatar/11psn.jpg" alt="">
+															<img :src="`${content.user.profile_icon}`" :alt="`${content.share_account_name}`">
 														</span>
-														<i>
-															<img src="@/assets/svg/icon_star.svg" alt="">
-														</i>
-													</a>
+														<em>{{content.share_account_name}}</em>
+													</nuxt-link>
 												</div>
 											</div>
 											<div class="art-info pad-right-sm">
-												<time datetime="2019-01-01"><i class="far fa-clock"></i>2019/01/01</time>
+												<time :datetime="`${content.created_at}`"><i class="far fa-clock"></i>{{content.created_at}}</time>
 												<h3 class="h-sm">
-													<a href="#">cos fifty</a>
+													<a href="#">{{content.share_account_name}}</a>
 												</h3>
 												<div class="art-delete"><em class="icon-minus"></em></div>
 											</div>
@@ -379,23 +397,40 @@ export default {
 	async fetch ({ app, store, params }) {
 
 		// let { data } = await app.$axios.$get('/article/' + params.article_id + '/' + store.state.login_account.account_name)
+		var account = '';
+		if(!process.server){
+			account = store.state.login_account.account_name;
+		}
 
-		let [data_article_detail, data_article_comment] = await Promise.all([
+		let [data_article_detail, data_article_comment, data_article_review, data_article_share] = await Promise.all([
 
-			app.$axios.$get('/article/' + params.article_id + '/yamada307'),
+			app.$axios.$get('/article/' + params.article_id + '/' + account),
 			app.$axios.$post('/article/comment/' + params.article_id, 
           	{
 				"page_num": 1,
-				"page_size": 4
+				"page_size": 10
+			}),
+			app.$axios.$post('/review/' + params.article_id, 
+          	{
+				"page_num": 1,
+				"page_size": 10
+			}),
+			app.$axios.$post('/share/' + params.article_id, 
+          	{
+				"page_num": 1,
+				"page_size": 10
 			})
-
 		])
 
 		console.log(data_article_detail.data);
-		console.log(data_article_comment.data.comment_info);
+		// console.log(data_article_comment.data.comment_info);
+		// console.log(data_article_review.data.review);
+		// console.log(data_article_share.data.share);
 
 		store.commit('article_single/SET_ARTICLE_DETAIL', data_article_detail.data)
 		store.commit('article_single/SET_ARTICLE_COMMENT', data_article_comment.data.comment_info)
+		store.commit('article_single/SET_ARTICLE_REVIEW', data_article_review.data.review)
+		store.commit('article_single/SET_ARTICLE_SHARE', data_article_share.data.share)
 
 	},
 
@@ -406,18 +441,22 @@ export default {
 		    	var body = marked(this.$store.state.article_single.data_article_detail.body);
 				return body
 			}
-	    },
+	    }
 
-	// コメント ソート
-	    reverseItems() {
-        	return this.$store.state.article_single.data_article_comment.slice().reverse();
-    	}
-    
 	},
 
 	mounted(){
 
 		this.$store.dispatch("article_single/init_article_single")
+
+		var rakunAccount = localStorage.getItem('rakun-account');
+		if(rakunAccount){
+			this.$axios.$get('/article/' + this.$route.params.article_id + '/' + rakunAccount)
+			.then((res) => {
+		        console.log(res.data);
+		        this.$store.commit('article_single/SET_ARTICLE_DETAIL', res.data)
+			})
+		}
 		
 	},
 
@@ -479,8 +518,9 @@ export default {
 
 				this.error_addComment = null
 
-				var addCommentBody = this.addComment;
-					addCommentBody = addCommentBody.replace(/#\d+/g, '<button class="comment-tippy" data-com="#1">#1</button>');
+				var addCommentBody = this.addComment,
+					dataIdx = $('#add-comment').attr('data-idx');
+					addCommentBody = addCommentBody.replace(/#\d+/g, '<button class="comment-tippy" data-com="' + dataIdx + '">' + dataIdx + '</button>');
 
 				console.log(addCommentBody);
 
@@ -488,13 +528,13 @@ export default {
 	          	{
 					"account_name": this.$store.state.login_account.account_name,
 					"article_id": this.$route.params.article_id,
-					"comment": this.addComment
+					"comment": addCommentBody
 				})
 				.then((res) => {
 					this.$axios.$post('/article/comment/' + this.$route.params.article_id, 
 		          	{
 						"page_num": 1,
-						"page_size": 4
+						"page_size": 10
 					})
 					.then((res) => {
 						console.log(res);
@@ -505,9 +545,63 @@ export default {
 						$('#overlay').fadeOut();
 					})				
 				})
-
 			}
+		},
+
+	// 記事にいいねする
+		fn_review() {
+
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_REVIEWED', 1)
+
+			this.$axios.$put('/review/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+				this.$axios.$post('/review/' + this.$route.params.article_id, 
+	          	{
+					"page_num": 1,
+					"page_size": 10
+				})
+				.then((res) => {
+					this.$store.commit('article_single/SET_ARTICLE_REVIEW', res.data.review)
+				})
+			})
+		},
+
+	// 記事をシェアする
+		fn_share() {
+
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_SHARED', 1)
+
+			this.$axios.$put('/share/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+				this.$axios.$post('/share/' + this.$route.params.article_id, 
+	          	{
+					"page_num": 1,
+					"page_size": 10
+				})
+				.then((res) => {
+					console.log(res.data);
+					this.$store.commit('article_single/SET_ARTICLE_SHARE', res.data.share)
+				})
+			})
+		},
+
+	// 記事をクリップする
+		fn_clip() {
+
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_CLIPED', 1)
+
+			this.$axios.$put('/clip/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+			})
 		}
+
+
+
+
+
 	}
 
 }
