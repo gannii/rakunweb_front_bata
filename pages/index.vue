@@ -243,6 +243,19 @@ export default {
 
   async fetch ({ app, store }) {
 
+    
+    if(process.server){
+
+      var thisAccount = app.$auth.$storage.getUniversal("_token.azureSignIn");
+
+      thisAccount = Buffer.from(thisAccount, "base64").toString();
+
+      console.log(thisAccount);
+
+    }
+
+
+
     // if(!store.state.data_latest_article){
 
       let [data_latest_article, data_popular_article, data_popular_tag, data_popular_user] = await Promise.all([
@@ -294,7 +307,7 @@ export default {
 
     // }
 
-    console.log(data_latest_article.data.article_info);
+    // console.log(data_latest_article.data.article_info);
     
     store.commit('SET_DATA_TYPE', 'post')
     store.commit('SET_IDX_TABS', 'latest_article')

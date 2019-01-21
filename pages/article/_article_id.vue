@@ -54,12 +54,12 @@
 									</li>
 
 									<li>
-										<span>
+										<span @click="urlCopy">
 											<img src="@/assets/svg/icon_link.svg" alt="">
 										</span>
 									</li>
-									<li class="icon-sm">
-										<span>
+									<li class="icon-sm" v-if="$store.state.login_account">
+										<span id="btn-submenu"　@click="show_tippy_submenu">
 											<img src="@/assets/svg/icon_submenu.svg" alt="">
 										</span>
 									</li>
@@ -197,7 +197,7 @@
 								</li>
 								<li>
 									<div class="li-in">
-										<img src="@/assets/svg/icon_like.svg" alt=""><img src="@/assets/svg/icon_like-white.svg" alt=""><b>（{{Object.keys(this.$store.state.article_single.data_article_review).length}}）</b>
+										<img src="@/assets/svg/icon_like.svg" alt=""><img src="@/assets/svg/icon_like-white.svg" alt=""><b>（{{Object.keys($store.state.article_single.data_article_review).length}}）</b>
 									</div>
 								</li>
 								<li>
@@ -283,7 +283,7 @@
 									
 									<p v-if="Object.keys(this.$store.state.article_single.data_article_review).length == 0">現在、いいねはありません</p>
 
-									<article v-else v-for="content in $store.state.article_single.data_article_review" :key="content.article_id">
+									<article v-else v-for="content in $store.state.article_single.data_article_review">
 										<div class="art-in">
 											<div class="art-avatar">
 												<div class="avatar-md">
@@ -362,6 +362,65 @@
 </div>
 
 
+<!-- 記事 - サブメニュー -->
+<div id="dtl-submenu" class="tooltips">
+	<div v-if="$store.state.article_single.tippy_submenu">
+		<ul>
+			<li @click="remove_this_like">いいね！取消</li>
+			<li @click="remove_this_share">シェア取消</li>
+			<li @click="remove_this_clip">CLIP取消</li>
+			<li @click="report_dialog">通報</li>
+		</ul>
+	</div>
+</div>
+
+<!-- 通報 -->
+<div id="send-report" class="dialog">
+	<div class="in">
+
+		<form @submit.prevent="send_report">
+
+			<table class="defor">
+				<tbody>
+					<tr>
+						<th>通報種別</th>
+						<td>
+							<select v-model="report_type">
+								<option value="">－</option>
+								<option value="1">著作権</option>
+								<option value="2">公序良俗違反</option>
+								<option value="3">その他</option>
+							</select>
+							<p class="error" v-if="error_report_type">{{error_report_type}}</p>
+						</td>
+					</tr>
+					<tr>
+						<th>通報理由</th>
+						<td>
+							<textarea id="report_reason" v-model="report_reason" rows="5"></textarea>
+							<p class="error" v-if="error_report_reason">{{error_report_reason}}</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p>
+				<label>
+					<input type="checkbox" v-model="report_check">上記理由で通報します。
+				</label>
+			</p>
+
+			<div class="btns">
+				<button v-if="report_check" id="btn_send_report" type="submit" class="btn orange">送 信</button>
+				<button v-else id="btn_send_report" type="button" class="btn gray">送 信</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+
 	</div>
 </template>
 
@@ -372,11 +431,23 @@ export default {
 
 	data() {
 		return{
+		// コメント
       		postComment: '',
 			error_postComment: null,
 
+		//　コメントに対するコメント - ダイアログ
 			addComment: '',
-			error_addComment: null
+			error_addComment: null,
+
+		// 通報 - ダイアログ
+			report_type: '',
+			error_report_type: null,
+
+			report_reason: '',
+			error_report_reason: null,
+
+			report_check: false
+
 		}
 	},
 
@@ -454,6 +525,7 @@ export default {
 			this.$axios.$get('/article/' + this.$route.params.article_id + '/' + rakunAccount)
 			.then((res) => {
 		        console.log(res.data);
+		        this.$store.commit('article_single/SET_ARTICLE_DETAIL', null)
 		        this.$store.commit('article_single/SET_ARTICLE_DETAIL', res.data)
 			})
 		}
@@ -596,11 +668,128 @@ export default {
 			.then((res) => {
 				console.log(res);
 			})
+		},
+
+	// URLをコピーする
+		urlCopy() {
+
+			$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">'+location.href+'</textarea>');
+			$('#currentURL').select();
+			document.execCommand('copy');
+			$('#currentURL').remove();
+			alert("URLをコピーしました。");
+
+		},
+
+	// 記事 - サブメニューを表示する
+		show_tippy_submenu() {
+
+			this.$store.commit("article_single/SET_TIPPY_SUBMENU", true)
+
+			tippy('#btn-submenu', {
+				content: document.querySelector('#dtl-submenu'),
+				placement: 'right',
+				trigger: 'click',
+				animation: 'shift-toward',
+				arrow: true,
+				theme: 'light-border'
+				// hideOnClick: 'persistent'
+			})
+
+		},
+
+	// いいね(記事)取消
+		remove_this_like() {
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_REVIEWED', 0)
+
+			this.$axios.$delete('/review/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+				this.$axios.$post('/review/' + this.$route.params.article_id, 
+	          	{
+					"page_num": 1,
+					"page_size": 10
+				})
+				.then((res) => {
+					this.$store.commit('article_single/SET_ARTICLE_REVIEW', res.data.review)
+				})
+			})
+		},
+
+	// シェア取消
+		remove_this_share() {
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_SHARED', 0)
+
+			this.$axios.$delete('/share/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+				this.$axios.$post('/share/' + this.$route.params.article_id, 
+	          	{
+					"page_num": 1,
+					"page_size": 10
+				})
+				.then((res) => {
+					console.log(res.data);
+					this.$store.commit('article_single/SET_ARTICLE_SHARE', res.data.share)
+				})
+			})
+		},
+
+	// クリップ取消
+		remove_this_clip() {
+			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_CLIPED', 0)
+
+			this.$axios.$delete('/clip/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
+			.then((res) => {
+				console.log(res);
+			})
+		},
+
+	// 通報 - ダイアログ
+		report_dialog() {
+
+			$('#send-report').fadeIn();
+			$('#overlay').fadeIn();		
+		
+		},
+
+	// 通報
+		send_report() {
+
+			var _report_type = this.report_type,
+				_report_reason = this.report_reason;
+
+			if(_report_type == '' || _report_reason == ''){
+
+				if(_report_type == ''){
+					this.error_report_type = "通報種別を選択してください";
+				}
+				if(_report_reason == ''){
+					this.error_report_reason = "通報理由を入力してください";
+				}
+				return;
+
+			}else{
+				this.error_report_type = null;
+				this.error_report_reason = null;
+
+				$('#send-report').fadeOut();
+				$('#overlay').fadeOut();	
+
+				this.$axios.$post('/report/' + this.$route.params.article_id, 
+				{
+					"account_name": this.$store.state.login_account.account_name,
+					"report_type": _report_type,
+					"report_reason": _report_reason
+				})
+				.then((res) => {
+					console.log(res);
+					this.report_type = '';
+					this.report_reason = '';
+				})
+			}
+
 		}
-
-
-
-
 
 	}
 

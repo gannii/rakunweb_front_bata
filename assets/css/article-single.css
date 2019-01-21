@@ -263,6 +263,13 @@
   background-color: #e61b00;
 }
 
+/* 通報 - ダイアログ */
+#send-report {
+  max-height: none;
+  height: auto;
+}
+
+
 @media screen and (min-width: 600px) {
   .sec.sec-article .sec-head .icon-wrap {
     position: relative;

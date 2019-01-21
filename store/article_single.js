@@ -4,7 +4,9 @@ export const state = () => ({
 	data_article_detail: null,
 	data_article_comment: null,
 	data_article_review: null,
-	data_article_share: null
+	data_article_share: null,
+
+	tippy_submenu: false
 
 })
 
@@ -31,6 +33,10 @@ export const mutations = {
 	},
 	UPDATE_ARTICLE_DETAIL_IS_CLIPED: function (state, item) {
 		state.data_article_detail.is_clipped = item
+	},
+
+	SET_TIPPY_SUBMENU: function (state, item) {
+		state.tippy_submenu = item
 	}
 
 }

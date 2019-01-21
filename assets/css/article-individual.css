@@ -1,0 +1,40 @@
+.sec.sec-article {
+  padding: 60px 0 0;
+}
+
+.sec.sec-article .sec-head {
+  margin: 0 0 50px;
+}
+
+.sec.sec-article .sec-body h1, .sec.sec-article .sec-body h2, .sec.sec-article .sec-body h3, .sec.sec-article .sec-body h4, .sec.sec-article .sec-body h5, .sec.sec-article .sec-body h6 {
+  margin: 15px 0;
+}
+
+.sec.sec-article .sec-body p {
+  margin: 15px 0;
+}
+
+.sec.sec-article .sec-body img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 15px 0;
+}
+
+@media screen and (min-width: 600px) {
+  .sec.sec-article {
+    padding: 50px 0 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .sec.sec-article {
+    padding: 40px 0 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .sec.sec-article {
+    padding: 0;
+  }
+}
