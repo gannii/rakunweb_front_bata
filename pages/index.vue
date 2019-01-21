@@ -243,7 +243,8 @@ export default {
 
   async fetch ({ app, store }) {
 
-    
+
+/*    
     if(process.server){
 
       var thisAccount = app.$auth.$storage.getUniversal("_token.azureSignIn");
@@ -253,7 +254,7 @@ export default {
       console.log(thisAccount);
 
     }
-
+*/
 
 
     // if(!store.state.data_latest_article){
