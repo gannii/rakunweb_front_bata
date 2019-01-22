@@ -11,7 +11,8 @@ export const config = {
 	// api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
 // 京都さん
-	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
+	// api_host: 'https://rakunwebapi-it1-win.azurewebsites.net/api/v1' // 新 2019/01/22
 
 }
 

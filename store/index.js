@@ -30,7 +30,8 @@ export const config = {
 	// api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
 // 京都さん
-	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
+	// api_host: 'https://rakunwebapi-it1-win.azurewebsites.net/api/v1' // 新 2019/01/22
 
 }
 
@@ -89,7 +90,8 @@ export const actions = {
 
 
 	load(ctx){
-		
+
+/*		
 		var rakunAccount = localStorage.getItem('rakun-account');
 		if(rakunAccount){
 			this.$axios.$get('/account/' + rakunAccount + '/' + rakunAccount)
@@ -97,11 +99,13 @@ export const actions = {
 				ctx.commit("SET_LOGIN_ACCOUNT", res.data);
 			});
 		}
+*/
 
 	},
 
 // COMMON
 	async set_access_token({ commit }){
+
 
 		var token = getParam('access_token');
 
@@ -122,6 +126,7 @@ export const actions = {
 
 
 // 初回設定 フロー
+/*
 		var rakunAccount = localStorage.getItem('rakun-account');
 
 	// localStrageにアカウントが存在する場合
@@ -136,7 +141,7 @@ export const actions = {
 
 	// localStrageにアカウントが存在しないの場合 -> 初回設定未済確認
 		}else{
-
+*/
 			axios.get(config.api_host + '/initial_setting/' + id_token_payload.oid)
 			.then((res) => {
 
@@ -150,6 +155,7 @@ export const actions = {
 					$('#overlay').fadeIn().addClass('disabled');
 
 			// account_nameが存在する場合
+
 				}else{
 					
 					this.$axios.$get('/account/' + res.data.data.account_name + '/' + res.data.data.account_name)
@@ -165,9 +171,9 @@ export const actions = {
 				}
 
 			})
-
+/*
 		}
-
+*/
 	},
 
 

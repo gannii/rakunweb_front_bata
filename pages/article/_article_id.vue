@@ -216,7 +216,7 @@
 
 							<div id="view-comment" class="view show">
 								
-								<div class="view-head">
+								<div class="view-head" v-if="$store.state.login_account">
 									<p class="error" v-if="error_postComment">{{error_postComment}}</p>
 									<textarea id="post-comment" v-model="postComment" rows="5" placeholder="コメント"></textarea>
 									<div class="btns">
@@ -258,7 +258,7 @@
 																<li>
 																	<img src="@/assets/svg/icon_rakun.svg" alt=""><b>{{content.appraised_value}}</b>
 																</li>
-																<li class="sub-tippy icon-sm" @click="showSubTippy" :data-this-com="`#${content.comment_id}`">
+																<li  v-if="$store.state.login_account" class="sub-tippy icon-sm" @click="showSubTippy" :data-this-com="`#${content.comment_id}`">
 																	<span>
 																		<img src="@/assets/svg/icon_submenu.svg" alt="">
 																	</span>
@@ -468,14 +468,15 @@ export default {
 	async fetch ({ app, store, params }) {
 
 		// let { data } = await app.$axios.$get('/article/' + params.article_id + '/' + store.state.login_account.account_name)
+
 		var account = '';
-		if(!process.server){
-			account = store.state.login_account.account_name;
+		if(store.state.login_account){
+			account = '/' + store.state.login_account.account_name;
 		}
 
 		let [data_article_detail, data_article_comment, data_article_review, data_article_share] = await Promise.all([
 
-			app.$axios.$get('/article/' + params.article_id + '/' + account),
+			app.$axios.$get('/article/' + params.article_id + account),
 			app.$axios.$post('/article/comment/' + params.article_id, 
           	{
 				"page_num": 1,
@@ -520,6 +521,7 @@ export default {
 
 		this.$store.dispatch("article_single/init_article_single")
 
+/*
 		var rakunAccount = localStorage.getItem('rakun-account');
 		if(rakunAccount){
 			this.$axios.$get('/article/' + this.$route.params.article_id + '/' + rakunAccount)
@@ -529,7 +531,8 @@ export default {
 		        this.$store.commit('article_single/SET_ARTICLE_DETAIL', res.data)
 			})
 		}
-		
+*/
+
 	},
 
 	methods: {

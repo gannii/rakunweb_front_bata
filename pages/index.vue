@@ -244,20 +244,13 @@ export default {
   async fetch ({ app, store }) {
 
 
-/*    
-    if(process.server){
-
-      var thisAccount = app.$auth.$storage.getUniversal("_token.azureSignIn");
-
-      thisAccount = Buffer.from(thisAccount, "base64").toString();
-
-      console.log(thisAccount);
-
-    }
-*/
-
-
     // if(!store.state.data_latest_article){
+
+      var account = '';
+      if(store.state.login_account){
+        account = store.state.login_account.account_name;
+      }
+
 
       let [data_latest_article, data_popular_article, data_popular_tag, data_popular_user] = await Promise.all([
 
@@ -266,7 +259,7 @@ export default {
             language: 1,
             page_num: 1,
             page_size: 10,
-            login_account_name: "yamada307"
+            login_account_name: account
           }),
 
           app.$axios.$post('/home/popular_article',
@@ -275,7 +268,7 @@ export default {
             page_num: 1,
             page_size: 10,
             last_days: 100,
-            login_account_name: "yamada307"
+            login_account_name: account
           }),
 
           app.$axios.$post('/home/popular_tag',
@@ -285,7 +278,7 @@ export default {
             page_size: 10,
             last_days: 100,
             tags_cnt: 4,
-            login_account_name: "yamada307"
+            login_account_name: account
           }),
 
           app.$axios.$post('/home/popular_user',
@@ -294,7 +287,7 @@ export default {
             page_num: 1,
             page_size: 10,
             last_days: 100,
-            login_account_name: "yamada307"
+            login_account_name: account
           })
       ])
 
@@ -344,12 +337,17 @@ export default {
       this.$store.commit('SET_DATA_TYPE', 'post')
       this.$store.commit('SET_IDX_TABS', 'latest_article')
 
+      var account = '';
+      if(store.state.login_account){
+        account = store.state.login_account.account_name;
+      }
+
       this.$axios.$post('/home/latest_article',
         {
           language: 1,
           page_num: 1,
           page_size: 10,
-          login_account_name: "yamada307"
+          login_account_name: account
       })
       .then((res) => {
           console.log(res.data);
@@ -362,13 +360,18 @@ export default {
       this.$store.commit('SET_DATA_TYPE', 'post')
       this.$store.commit('SET_IDX_TABS', 'popular_article')
 
+      var account = '';
+      if(store.state.login_account){
+        account = store.state.login_account.account_name;
+      }
+
       this.$axios.$post('/home/popular_article',
       {
         language: 1,
         page_num: 1,
         page_size: 10,
         last_days: 100,
-        login_account_name: "yamada307"
+        login_account_name: account
       })
       .then((res) => {
           console.log(res.data);
@@ -381,6 +384,11 @@ export default {
       this.$store.commit('SET_DATA_TYPE', 'tag')
       this.$store.commit('SET_IDX_TABS', 'popular_tag')
 
+      var account = '';
+      if(store.state.login_account){
+        account = store.state.login_account.account_name;
+      }
+
       this.$axios.$post('/home/popular_tag',
       {
         language: 1,
@@ -388,7 +396,7 @@ export default {
         page_size: 10,
         last_days: 100,
         tags_cnt: 4,
-        login_account_name: "yamada307"
+        login_account_name: account
       })
       .then((res) => {
           console.log(res.data);
@@ -401,13 +409,18 @@ export default {
       this.$store.commit('SET_DATA_TYPE', 'user')
       this.$store.commit('SET_IDX_TABS', 'popular_user')
 
+      var account = '';
+      if(store.state.login_account){
+        account = store.state.login_account.account_name;
+      }
+      
       this.$axios.$post('/home/popular_user',
       {
         language: 1,
         page_num: 1,
         page_size: 10,
         last_days: 100,
-        login_account_name: "yamada307"
+        login_account_name: account
       })
       .then((res) => {
           console.log(res.data);

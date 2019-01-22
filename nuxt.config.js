@@ -7,6 +7,10 @@ module.exports = {
 
   debug: true,
 
+  router: {
+    middleware: 'authenticated'
+  },
+
   /*
   ** Headers of the page
   */
@@ -120,7 +124,8 @@ module.exports = {
     // baseURL: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
   // 京都さん
-    baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1'
+    baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
+    // baseURL: 'https://rakunwebapi-it1-win.azurewebsites.net/api/v1' // 新 2019/01/22
 
   },
 

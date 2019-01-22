@@ -106,12 +106,12 @@
 export default {
 
 	mounted(){
+
 		var urlHash = location.hash;
 		if(urlHash.match(/access_token=/)){
 			this.$store.dispatch("set_access_token")
-		}else{
-			this.$store.dispatch("load");
 		}
+
 	},
 
 	methods: {
