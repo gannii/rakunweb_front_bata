@@ -4,21 +4,31 @@
 		<main>
 
 			<div id="profile">
-				<div class="cover" :style="`background-image:url('${PROFILE_BACK_IMAGE}');`"></div>
+
+				<div v-if="$store.state.profile.profile_info.profile_back_image" class="cover" :style="`background-image:url('${PROFILE_BACK_IMAGE}');`"></div>
+        <div v-else class="cover nobkimage"></div>
+
 				<div class="inner max1000">
 					<div class="prof-head">
 						<div class="avatar-xl">
-							<span>
-								<img :src="`${PROFILE_ICON}`" alt="">
+
+              <span v-if="$store.state.profile.profile_info.profile_icon">
+                <img :src="`${$store.state.profile.profile_info.profile_icon}`" :alt="`${$store.state.profile.profile_info.nickname}`">
+              </span>
+							<span v-else>
+								<img src="@/assets/img/user-noimage.png" :alt="`${$store.state.profile.profile_info.nickname}`">
 							</span>
+
 						</div>
 						<div class="prof-dtl">
 							<h2>
-								<strong class="h-md">{{$store.state.profile.profile_info.account_name}}</strong>
-								<!-- <small class="h-sm">@{{$store.state.profile.profile_info.account_name}}</small> -->
+								<strong class="h-md">{{$store.state.profile.profile_info.nickname}}</strong>
+								<small class="h-sm">@{{$store.state.profile.profile_info.account_name}}</small>
 							</h2>
-							<div id="prof-edit" class="trig-dialog" data-type="prof-edit">プロフィール編集</div>
-							<div class="sns">
+
+							<div id="prof-edit" class="trig-dialog" data-type="prof-edit" v-if="$store.state.profile.myself">プロフィール編集</div>
+							
+              <div class="sns">
 								<ul>
 									<li>
 										<a href="" target="_blank">
@@ -89,7 +99,7 @@
       <section class="sec sec-list" :data-type="`${PROFILE_DATA_TYPE}`" v-if="$store.state.profile.profile_tabs === 'feed'">
         <div class="inner">
           <div class="sec-body">
-
+<!--
             <article v-for="content in $store.state.profile.profile_content" :key="content.article_id">
               <div class="art-in">
                 <div class="art-exp">
@@ -131,7 +141,7 @@
                 </div>
               </div>
             </article>
-
+-->
           </div>
         </div>
       </section>
@@ -197,78 +207,124 @@
 		
 		</main>
 
-    <nav class="floating-menu btn-act">
+    <nav class="floating-menu btn-act" v-if="!$store.state.profile.myself">
       <ul>
         <li id="btn-tipping" class="trig-dialog icon-lg" data-type="tipping">
           <span>
             <img class="lg" src="@/assets/svg/icon_tip.svg" alt="">
           </span>
         </li>
-        <li id="btn-follow" class="icon-md" data-type="follow">
+        
+        <li id="btn-follow" class="icon-md on" data-type="follow" v-if="$store.state.profile.profile_info.is_followed">
           <span>
+            <img class="lg" src="@/assets/svg/icon_prof-edit-white.svg" alt="">
+          </span>
+        </li>
+        <li v-else id="btn-follow" class="icon-md" data-type="follow">
+          <span @click="fn_follow">
             <img class="lg" src="@/assets/svg/icon_prof-edit.svg" alt="">
           </span>
         </li>
-        <li id="btn-submenu" class="icon-md">
-          <span>
+
+        <li class="icon-md">
+          <span id="btn-submenu"　@click="show_tippy_profsubmenu">
             <img class="lg" src="@/assets/svg/icon_submenu.svg" alt="">
           </span>
         </li>
+
       </ul>
     </nav>
+
 
 <!-- dialog - プロフィール編集 -->
     <div id="dialog-prof-edit" class="dialog">
       <div class="in">
         
-        <div class="dialog-body">
-          <table class="defor">
-            <tbody>
-              <tr>
-                <th>ニックネーム</th>
-                <td>
-                  <input type="text" value="イワモトシンイチロウ">
-                </td>
-              </tr>
-              <tr>
-                <th>アイコン</th>
-                <td>
-                  <input type="file" value=""/>
-                </td>
-              </tr>
-              <tr>
-                <th>背景画像</th>
-                <td>
-                  <input type="file" value=""/>
-                </td>
-              </tr>
-              <tr>
-                <th>紹介文</th>
-                <td>
-                  <textarea class="form-control" rows="3"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <th>Facebook URL</th>
-                <td>
-                  <input type="text" value="https://facebook.com/***">
-                </td>
-              </tr>
-              <tr>
-                <th>Twitter URL</th>
-                <td>
-                  <input type="text" value="https://twitter.com/***">
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <form @submit.prevent="fn_profile_edit">
 
-        <div class="dialog-foot">
-          <div class="btns">
-            <button type="button" class="btn orange">設 定</button>
+          <div class="dialog-body">
+            <table class="defor">
+              <tbody>
+                <tr>
+                  <th>ニックネーム</th>
+
+                  <td v-if="$store.state.login_account.nickname">
+                    <input type="text" id="edit_nickname" v-model="edit_nickname">
+                  </td>
+                  <td v-else>
+                    <input type="text" v-model="edit_nickname">
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>アイコン</th>
+
+                  <td v-if="$store.state.login_account.profile_icon">
+                    <div id="profile_icon" class="avatar-lg">
+                      <span>
+                        <img id="preview_profile_icon" :src="`${$store.state.login_account.profile_icon}`">
+                      </span>
+                    </div>
+                    <label for="input_profile_icon" class="label_btn">
+                      <em>変更する</em>
+                      <input id="input_profile_icon" type="file" value="変更" @change="change_profile_icon" style="display:none;">
+                    </label>
+                  </td>
+                  <td v-else>
+                    <div id="profile_icon" class="avatar-lg">
+                      <span>
+                        <img id="preview_profile_icon">
+                      </span>
+                    </div>
+                    <input id="input_profile_icon" type="file" @change="change_profile_icon">
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>背景画像</th>
+
+                  <td v-if="$store.state.login_account.profile_back_image">
+                    <img id="preview_profile_back_image" :src="`${$store.state.login_account.profile_back_image}`">
+                    <label for="input_profile_back_image" class="label_btn">
+                      <em>変更する</em>
+                      <input id="input_profile_back_image" type="file" @change="change_profile_back_image" style="display:none;">
+                    </label>
+                  </td>
+                  <td v-else>
+                    <img id="preview_profile_back_image">
+                    <input id="input_profile_back_image" type="file" @change="change_profile_back_image">
+                  </td>
+
+                </tr>
+                <tr>
+                  <th>紹介文</th>
+                  <td>
+                    <textarea class="form-control" rows="3" v-model="edit_selfIntroduction"></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Facebook URL</th>
+                  <td>
+                    <input type="text" value="https://facebook.com/***">
+                  </td>
+                </tr>
+                <tr>
+                  <th>Twitter URL</th>
+                  <td>
+                    <input type="text" value="https://twitter.com/***">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
+
+          <div class="dialog-foot">
+            <div class="btns">
+              <button type="submit" class="btn orange">設 定</button>
+            </div>
+          </div>
+
+        </form>
 
       </div>
       <div class="dialog-close"><i class="far fa-times-circle"></i></div>
@@ -281,9 +337,14 @@
         
         <div class="dialog-head">
           <div class="avatar-lg">
-            <span>
-              <img :src="`${PROFILE_ICON}`" alt="">
+
+            <span v-if="$store.state.profile.profile_info.profile_icon">
+              <img :src="`${$store.state.profile.profile_info.profile_icon}`" :alt="`${$store.state.profile.profile_info.nickname}`">
             </span>
+            <span v-else>
+              <img src="@/assets/img/user-noimage.png" :alt="`${$store.state.profile.profile_info.nickname}`">
+            </span>
+
           </div>
           <h6 class="h-sm">{{$store.state.profile.profile_info.nickname}}</h6>
         </div>
@@ -293,6 +354,7 @@
           <div class="tip-operation">
 
             <div id="tip-total">0</div>
+            <p class="error" v-if="error_tipTotal">{{error_tipTotal}}</p>
 
             <div class="tip-dtl">
               <ul>
@@ -342,7 +404,7 @@
           <dl>
             <dt>メッセージ</dt>
             <dd>
-              <textarea id="tip-message" class="form-control" rows="3" maxlength="500"></textarea>
+              <textarea id="tip-message" class="form-control" rows="3" maxlength="500" v-model="tipMessage"></textarea>
             </dd>
           </dl>
 
@@ -354,9 +416,10 @@
               <input id="tip-check" type="checkbox">ニックネームさんへ上記金額で投げ銭します。
             </label>
           </p>
+          <p class="error" v-if="error_tipChecked">{{error_tipChecked}}</p>
 
           <div class="btns">
-            <button type="button" class="btn orange" @click="post_tip">送 金</button>
+            <button type="button" class="btn orange" @click="fn_post_tip">送 金</button>
           </div>
         </div>
 
@@ -364,6 +427,18 @@
       <div class="dialog-close"><i class="far fa-times-circle"></i></div>
     </div>
 <!-- dialog - 投げ銭 -->
+
+
+<!-- プロフィール - サブメニュー -->
+<div id="dtl-submenu" class="tooltips">
+  <div v-if="$store.state.profile.tippy_profsubmenu">
+    <ul>
+      <li v-if="$store.state.profile.profile_info.is_followed" @click="remove_this_follow">フォロー解除</li>
+      <li v-if="$store.state.profile.profile_info.is_blocked" @click="remove_this_unblock">ブロック解除</li>
+      <li v-else @click="remove_this_block">ブロック</li>
+    </ul>
+  </div>
+</div>
 
 
 	</div>
@@ -380,9 +455,23 @@ if (process.browser) {
 
 export default {
 
+  data() {
+    return{
+
+    // 投げ銭
+      tipMessage: '',
+      error_tipTotal: '',
+      error_tipChecked: '',
+
+    // プロフィール編集
+      edit_nickname: this.$store.state.profile.profile_info.nickname,
+      edit_selfIntroduction: this.$store.state.profile.profile_info.self_introduction
+    }
+  },
+
 	head () {
     return {
-    	title: this.$store.state.profile.profile_info.account_name,
+    	title: this.$store.state.profile.profile_info.nickname,
       titleTemplate: '%s - RAKUN',
 	/*
 		meta: [
@@ -407,16 +496,15 @@ export default {
     
 	},
 
-	data() {
-		return{
-      
-		}
-	},
-
 	async fetch ({ app, store, params }) {
 
+    var account = '';
+    if(store.state.login_account){
+      account = '/' + store.state.login_account.account_name;
+    }
+
     let [data_profile, data_content] = await Promise.all([
-      app.$axios.$get('/account/' + params.account_name),
+      app.$axios.$get('/account/' + params.account_name + account),
       app.$axios.$post('/profile/feed',
         {
           profile_account_name: params.account_name,
@@ -425,8 +513,8 @@ export default {
         })
     ])
 
-    console.log(data_profile.data);
-    console.log(data_content.data.article_info);
+    // console.log(data_profile.data);
+    // console.log(data_content.data.article_info);
 
     store.commit('profile/SET_PROFILE_INFO', data_profile.data)
 
@@ -434,17 +522,24 @@ export default {
     store.commit('profile/SET_PROFILE_CONTENT', data_content.data.article_info)
     store.commit('profile/SET_PROFILE_TABS', 'feed')
 
+    store.commit('profile/SET_MYSELF', '')
+    if(store.state.login_account){
+      if(params.account_name == store.state.login_account.account_name){
+        store.commit('profile/SET_MYSELF', true)
+      }
+    }
 
 	},
 
 	computed:{
+
+      PROFILE_ICON(){
+      return this.$store.state.profile.profile_info.profile_icon
+      },
 	    PROFILE_BACK_IMAGE(){
 			return this.$store.state.profile.profile_info.profile_back_image
 	    },
-	    PROFILE_ICON(){
-			return this.$store.state.profile.profile_info.profile_icon
-	    },
-
+	    
       PROFILE_DATA_TYPE(){
         return this.$store.state.profile.profile_info.profile_data_type
       }
@@ -453,9 +548,117 @@ export default {
 
 	mounted(){
       this.$store.dispatch("profile/init_profile")
+
 	},
 
 	methods: {
+
+    // 投げ銭 実行
+      fn_post_tip(){
+
+        if($('#tip-total').text() == 0){
+
+          this.error_tipTotal = '投げ銭を設定してください'
+
+        }else{
+
+          this.error_tipTotal = ''
+
+          if(!$("#tip-check").prop('checked')){
+
+            this.error_tipChecked = 'チェックをいれてください'
+
+          }else{
+
+            this.error_tipChecked = ''
+
+            this.$axios.$post('/tip',
+            {
+              login_account_name: this.$store.state.login_account.account_name,
+              profile_account_name: this.$route.params.account_name,
+              tip_amount: $('#tip-total').text(),
+              message: this.tipMessage
+            })
+            .then((res) => {
+              console.log(res);
+
+              $('.dialog').hide();
+              $('#overlay').fadeOut();
+
+            })
+            .catch(function(error) {
+              console.log(error);
+              $('.dialog').hide();
+              $('#overlay').fadeOut();
+              if(error){
+                alert('残高不足のため送金出来ませんでした')
+              }
+            });
+
+          }
+
+        }
+
+      },
+
+
+    // プロフィール 変更（submit）
+      fn_profile_edit() {
+
+        var params = {
+            nickname: this.edit_nickname,
+            self_introduction: this.edit_selfIntroduction,
+            facebook_account_name: "facebookacccount",
+            twitter_account_name: "twitteracccount"
+        };
+
+        var obj_profile_icon = document.getElementById("preview_profile_icon");
+        var src_profile_icon = obj_profile_icon.src;
+        var obj_profile_back_image = document.getElementById("preview_profile_back_image");
+        var src_profile_back_image = obj_profile_back_image.src;
+
+        if(src_profile_icon.indexOf('https') == -1) {
+          params["profile_icon"] = $('#preview_profile_icon').attr('src');
+        }
+
+        if(src_profile_back_image.indexOf('https') == -1) {
+          params["profile_back_image"] = $('#preview_profile_back_image').attr('src');
+        }
+
+        $('.dialog').hide();
+        $('#overlay').fadeOut();
+
+        this.$axios.$patch('/account/' + this.$store.state.login_account.account_name, params)
+        .then((res) => {
+          console.log(res);
+
+          this.$axios.$get('/account/' + this.$route.params.account_name + '/' + this.$store.state.login_account.account_name)
+          .then((res) => {
+            this.$store.commit('profile/SET_PROFILE_INFO', res.data)
+            this.$store.commit('SET_LOGIN_ACCOUNT', res.data)
+          })
+
+        })
+
+      },
+
+      change_profile_icon(e){
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              $("#preview_profile_icon").attr('src', e.target.result);
+              $('#profile_icon').show();
+          }
+          reader.readAsDataURL(e.target.files[0]);
+      },
+
+      change_profile_back_image(e){
+        var reader = new FileReader();
+          reader.onload = function (e) {
+              $("#preview_profile_back_image").attr('src', e.target.result);
+              $("#preview_profile_back_image").show();
+          }
+          reader.readAsDataURL(e.target.files[0]);
+      },
     
 // フィード取得
 	    get_feed(e){
@@ -513,32 +716,69 @@ export default {
         this.$store.commit('profile/SET_PROFILE_TABS', 'block')
 	    },
 
-// 投げ銭 実行
-      post_tip(){
 
-        var tipTotal = $('#tip-total').text(),
-            tipMessage = $('#tip-message').val();
+// フォローする
+      fn_follow() {
 
-        if($("#tip-check").prop('checked')){
+        this.$store.commit('profile/UPDATE_FOLLOW', true)
+
+        this.$axios.$put('/follow/' + this.$route.params.account_name + '/' + this.$store.state.login_account.account_name)
+        .then((res) => {
+          console.log(res);
+        })
+
+      },
+
+// サブメニューを表示する
+      show_tippy_profsubmenu() {
+
+        this.$store.commit("profile/SET_TIPPY_PROFSUBMENU", true)
+
+        tippy('#btn-submenu', {
+          content: document.querySelector('#dtl-submenu'),
+          placement: 'left',
+          trigger: 'click',
+          animation: 'shift-toward',
+          arrow: true,
+          theme: 'light-border'
+          // hideOnClick: 'persistent'
+        })
+
+      },
+
+// フォロー解除
+      remove_this_follow() {
+
+        this.$store.commit('profile/UPDATE_FOLLOW', false)
+
+        this.$axios.$delete('/follow/' + this.$route.params.account_name + '/' + this.$store.state.login_account.account_name)
+        .then((res) => {
+          console.log(res);
           
-          if(tipTotal == 0){
-            console.log('投げ銭を設定してください');
-          }
+        })
+      
+      },
 
-          this.$axios.$post('/tip',
-          {
-            login_account_name: this.$route.params.account_name,
-            profile_account_name: this.$route.params.account_name,
-            tip_amount: tipTotal,
-            message: tipMessage
-          })
-          .then((res) => {
-            console.log(res);
-          })
+// ブロック
+      remove_this_block() {
+        this.$store.commit('profile/UPDATE_BLOCK', true)
+
+        this.$axios.$put('/block/' + this.$route.params.account_name + '/' + this.$store.state.login_account.account_name)
+        .then((res) => {
+          console.log(res);
+        })
+
+      },
+
+// ブロック解除
+      remove_this_unblock() {
+        this.$store.commit('profile/UPDATE_BLOCK', false)
+
+        this.$axios.$delete('/block/' + this.$route.params.account_name + '/' + this.$store.state.login_account.account_name)
+        .then((res) => {
+          console.log(res);
           
-        }else{
-          console.log('checkされてません');
-        }
+        })
 
       }
 

@@ -11,6 +11,9 @@ main {
   background-position: center;
   background-size: cover;
 }
+#profile .cover.nobkimage {
+  background-image: url(../img/back-noimage.jpg);
+}
 
 #profile .prof-head {
   text-align: center;
@@ -137,6 +140,97 @@ ul#slick-genre-profile li a.active {
   background-color: #FF1E00;
 }
 
+#dialog-prof-edit .in .dialog-body {
+  text-align: left;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor b,
+#dialog-prof-edit .in .dialog-body table.defor .nb {
+  color: #f00;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor b {
+  margin: 0 0 0 5px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor p {
+  margin: 5px 0 0;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tbody {
+  display: block;
+  width: 100%;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr {
+  display: block;
+  width: 100%;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr th,
+#dialog-prof-edit .in .dialog-body table.defor tr td {
+  display: block;
+  width: 100%;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr th {
+  text-align: left;
+  padding: 20px 0 5px;
+  font-weight: bold;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td label {
+  margin-right: 30px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td label.label_btn {
+  margin: 0;
+  display: block;
+}
+#dialog-prof-edit .in .dialog-body table.defor tr td label.label_btn em {
+  cursor: pointer;
+  display: inline-block;
+  background-color: #eee;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td label input,
+#dialog-prof-edit .in .dialog-body table.defor tr td label span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td label input[type="radio"] {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td label span {
+  margin: 0 0 0 5px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td #profile_icon {
+  /*display: none;*/
+  margin: 0 0 10px;
+}
+
+#dialog-prof-edit .in .dialog-body table.defor tr td #preview_profile_back_image {
+  /*display: none;*/
+}
+
+#dialog-prof-edit .in .dialog-body .btns {
+  text-align: center;
+  margin: 30px 0 0;
+}
+
 
 @media screen and (min-width: 600px) {
   #profile .cover {
@@ -219,6 +313,27 @@ ul#slick-genre-profile li a.active {
   }
   ul#slick-genre-profile li {
     width: 16.66%;
+  }
+
+  #dialog-prof-edit .in .dialog-body table.defor {
+    display: table;
+  }
+  #dialog-prof-edit .in .dialog-body table.defor tbody {
+    display: table-row-group;
+  }
+  #dialog-prof-edit .in .dialog-body table.defor tr {
+    display: table-row;
+    width: auto;
+  }
+  #dialog-prof-edit .in .dialog-body table.defor tr th,
+  #dialog-prof-edit .in .dialog-body table.defor tr td {
+    display: table-cell;
+    vertical-align: top;
+    width: auto;
+    padding: 15px 20px;
+  }
+  #dialog-prof-edit .in .dialog-body table.defor tr th {
+    width: 200px;
   }
 }
 

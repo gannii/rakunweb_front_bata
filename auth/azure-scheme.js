@@ -67,7 +67,7 @@ export default class Oauth2Scheme {
     const opts = {
       client_id: 'bbd6f96a-578f-47b1-b6f0-9543821d3285',
       nonce: 'defaultNonce',
-      redirect_uri: 'https://iwanuxt.azurewebsites.net',
+      redirect_uri: 'https://rakunwebfront-it1.azurewebsites.net',
       // redirect_uri: 'http://localhost:3000',
       scope: 'openid https://seqdiob2c.onmicrosoft.com/laravel-api-mng/api_management',
       response_type: 'id_token token',

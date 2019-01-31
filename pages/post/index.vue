@@ -57,9 +57,9 @@
 		<div class="floating-menu btn-act pos_top-left">
 			<ul>
 				<li class="icon-md btn-gray">
-					<span>
+					<nuxt-link to="/article_management/">
 						<b>記事<br />管理</b>
-					</span>
+					</nuxt-link>
 				</li>
 			</ul>
 		</div>
@@ -75,7 +75,6 @@ export default {
 	data() {
 		return{
 			postTitle: '',
-
 			error_postTitle: null
 		}
 	},
@@ -194,7 +193,7 @@ export default {
 					console.log(res.data);
 				})
 			*/
-				this.$router.push("/article_management/")
+				this.$router.push("/article_management/#draft")
 
 			}
 

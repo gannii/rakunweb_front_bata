@@ -56,6 +56,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+
+    { src: "@/plugins/filters.js" },
     
     { src: "~/plugins/simplemde", ssr: false },
     { src: "~/plugins/marked", ssr: false },
@@ -73,6 +75,8 @@ module.exports = {
     '@nuxtjs/axios',
 
     '@nuxtjs/auth',
+
+    'dayjs',
 
     ['nuxt-i18n', {
       locales: [
@@ -124,8 +128,8 @@ module.exports = {
     // baseURL: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
   // 京都さん
-    baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
-    // baseURL: 'https://rakunwebapi-it1-win.azurewebsites.net/api/v1' // 新 2019/01/22
+    // baseURL: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
+    baseURL: 'https://rakunwebapi-it1.azurewebsites.net/api/v1' // 新 2019/01/24
 
   },
 

@@ -1,14 +1,22 @@
 
 export const state = () => ({
 
+	myself: '',
+
 	profile_tabs: null,
-	profile_info: [],
-	profile_content: [],
-	profile_data_type: null
+	profile_info: '',
+	profile_content: '',
+	profile_data_type: null,
+
+	tippy_profsubmenu: ''
 
 })
 
 export const mutations = {
+
+	SET_MYSELF: function (state, item) {
+		state.myself = item
+	},
 
 	SET_PROFILE_TABS: function (state, item) {
 		state.profile_tabs = item
@@ -21,6 +29,17 @@ export const mutations = {
 	},
 	SET_PROFILE_DATA_TYPE: function (state, item) {
 		state.profile_data_type = item
+	},
+
+	UPDATE_FOLLOW: function (state, item) {
+		state.profile_info.is_followed = item
+	},
+	UPDATE_BLOCK: function (state, item) {
+		state.profile_info.is_blocked = item
+	},
+
+	SET_TIPPY_PROFSUBMENU: function (state, item) {
+		state.tippy_profsubmenu = item
 	}
 
 }

@@ -86,9 +86,14 @@
 							<div class="art-avatar">
 								<div class="avatar-md">
 									<nuxt-link :to="`/profile/${$store.state.article_single.data_article_detail.account_name}`">
-										<span>
-											<img :src="`${$store.state.article_single.data_article_detail.user.profile_icon}`" :alt="`${$store.state.article_single.data_article_detail.account_name}`">
+										
+										<span v-if="$store.state.article_single.data_article_detail.user.profile_icon">
+							                <img :src="`${$store.state.article_single.data_article_detail.user.profile_icon}`" :alt="`${$store.state.article_single.data_article_detail.user.nickname}`">
+							            </span>
+										<span v-else>
+											<img src="@/assets/img/user-noimage.png" :alt="`${$store.state.article_single.data_article_detail.user.nickname}`">
 										</span>
+
 									<!--
 										<i>
 											<img src="@/assets/svg/icon_star.svg" alt="">
@@ -100,7 +105,7 @@
 							<div class="art-avatar-dtl">
 								<div class="art-info">
 									<h3 class="h-sm">
-										<a href="#">{{$store.state.article_single.data_article_detail.account_name}}</a>
+										<nuxt-link :to="`/profile/${$store.state.article_single.data_article_detail.account_name}`">{{$store.state.article_single.data_article_detail.user.nickname}}</nuxt-link>
 									</h3>
 								</div>
 								<div class="art-meta">
@@ -366,9 +371,9 @@
 <div id="dtl-submenu" class="tooltips">
 	<div v-if="$store.state.article_single.tippy_submenu">
 		<ul>
-			<li @click="remove_this_like">いいね！取消</li>
-			<li @click="remove_this_share">シェア取消</li>
-			<li @click="remove_this_clip">CLIP取消</li>
+			<li v-if="$store.state.article_single.data_article_detail.is_reviewed == 1" @click="remove_this_like">いいね！取消</li>
+			<li v-if="$store.state.article_single.data_article_detail.is_shared == 1" @click="remove_this_share">シェア取消</li>
+			<li v-if="$store.state.article_single.data_article_detail.is_clipped == 1" @click="remove_this_clip">CLIP取消</li>
 			<li @click="report_dialog">通報</li>
 		</ul>
 	</div>
@@ -701,10 +706,11 @@ export default {
 
 		},
 
+
+/* DELETE */
 	// いいね(記事)取消
 		remove_this_like() {
-			this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_REVIEWED', 0)
-
+			
 			this.$axios.$delete('/review/' + this.$route.params.article_id + '/' + this.$store.state.login_account.account_name)
 			.then((res) => {
 				console.log(res);
@@ -714,9 +720,19 @@ export default {
 					"page_size": 10
 				})
 				.then((res) => {
+
+					this.$store.commit('article_single/UPDATE_ARTICLE_DETAIL_IS_REVIEWED', 0)
 					this.$store.commit('article_single/SET_ARTICLE_REVIEW', res.data.review)
+
 				})
 			})
+			.catch(function(error) {
+
+				console.log(error);
+				if(error){
+					alert('この記事のいいねの取消はできません')
+				}
+			});
 		},
 
 	// シェア取消

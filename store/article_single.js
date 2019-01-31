@@ -6,7 +6,7 @@ export const state = () => ({
 	data_article_review: null,
 	data_article_share: null,
 
-	tippy_submenu: false
+	tippy_submenu: ''
 
 })
 

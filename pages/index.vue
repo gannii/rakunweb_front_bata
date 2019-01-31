@@ -75,16 +75,20 @@
                       <nuxt-link :to="`/profile/${content.account_name}`">
                         
                         <span v-if="content.user.profile_icon">
-                          <img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
+                          <img :src="`${content.user.profile_icon}`" :alt="`${content.user.nickname}`">
                         </span>
                         <span v-else>
-                          <img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+                          <img src="@/assets/img/user-noimage.png" :alt="`${content.user.nickname}`">
                         </span>
 
-                        <em>{{content.account_name}}</em>
+                        <i v-if="content.user.official == 1">
+                          <img src="@/assets/svg/icon_star.svg" alt="">
+                        </i>
+
+                        <em>{{content.user.nickname}}</em>
                       </nuxt-link>
                     </div>
-                    <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
+                    <time><i class="far fa-clock"></i>{{content.published_at | formatDate}}</time>
                   </div>
                   <div class="art-cnts">
                     <ul>
@@ -130,16 +134,20 @@
                       <nuxt-link :to="`/profile/${content.account_name}`">
 
                         <span v-if="content.user.profile_icon">
-                          <img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
+                          <img :src="`${content.user.profile_icon}`" :alt="`${content.user.nickname}`">
                         </span>
                         <span v-else>
-                          <img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+                          <img src="@/assets/img/user-noimage.png" :alt="`${content.user.nickname}`">
                         </span>
 
-                        <em>{{content.account_name}}</em>
+                        <i v-if="content.user.official == 1">
+                          <img src="@/assets/svg/icon_star.svg" alt="">
+                        </i>
+
+                        <em>{{content.user.nickname}}</em>
                       </nuxt-link>
                     </div>
-                    <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
+                    <time><i class="far fa-clock"></i>{{content.published_at | formatDate}}</time>
                   </div>
                   <div class="art-cnts">
                     <ul>
@@ -175,7 +183,7 @@
                         <img src="@/assets/img/user-noimage.png" :alt="`${content.nickname}`">
                       </span>
 
-                      <i>
+                      <i v-if="content.official == 1">
                         <img src="@/assets/svg/icon_star.svg" alt="">
                       </i>
                     </nuxt-link>
@@ -338,8 +346,8 @@ export default {
       this.$store.commit('SET_IDX_TABS', 'latest_article')
 
       var account = '';
-      if(store.state.login_account){
-        account = store.state.login_account.account_name;
+      if(this.$store.state.login_account){
+        account = this.$store.state.login_account.account_name;
       }
 
       this.$axios.$post('/home/latest_article',
@@ -361,8 +369,8 @@ export default {
       this.$store.commit('SET_IDX_TABS', 'popular_article')
 
       var account = '';
-      if(store.state.login_account){
-        account = store.state.login_account.account_name;
+      if(this.$store.state.login_account){
+        account = this.$store.state.login_account.account_name;
       }
 
       this.$axios.$post('/home/popular_article',
@@ -385,8 +393,8 @@ export default {
       this.$store.commit('SET_IDX_TABS', 'popular_tag')
 
       var account = '';
-      if(store.state.login_account){
-        account = store.state.login_account.account_name;
+      if(this.$store.state.login_account){
+        account = this.$store.state.login_account.account_name;
       }
 
       this.$axios.$post('/home/popular_tag',
@@ -410,8 +418,8 @@ export default {
       this.$store.commit('SET_IDX_TABS', 'popular_user')
 
       var account = '';
-      if(store.state.login_account){
-        account = store.state.login_account.account_name;
+      if(this.$store.state.login_account){
+        account = this.$store.state.login_account.account_name;
       }
       
       this.$axios.$post('/home/popular_user',

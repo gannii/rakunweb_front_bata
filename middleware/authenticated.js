@@ -1,5 +1,6 @@
 export default function({app, store, redirect}) {
 
+/*
 	if(store.state.login_account == null){
 
 		const p = new Promise((resolve, reject) => {
@@ -13,7 +14,9 @@ export default function({app, store, redirect}) {
 				var _oid = thisAccount.split(',');
 				var oid = _oid[4].split(':');
 				oid = oid[1].substring(1, oid[1].length-1);
-  
+ 
+				console.log(oid);
+
 				resolve(oid);
 
 			}else{
@@ -39,6 +42,7 @@ export default function({app, store, redirect}) {
 						console.log('middleware ===> ' + res.data);
 
 					});
+					
 				}else{
 					
 				}
@@ -48,5 +52,6 @@ export default function({app, store, redirect}) {
 		});
 
 	}
+*/
 
 }

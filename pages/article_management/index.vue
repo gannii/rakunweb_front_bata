@@ -27,10 +27,16 @@
 								
 								<article v-if="$store.state.article_management.publish_list.length != 0" v-for="content in $store.state.article_management.publish_list" :key="content.article_id">
 									<div class="art-in">
-										<div class="art-img">
+										
+										<div class="art-img" v-if="content.eyecatch_uri">
 											<nuxt-link :to="`/article_management/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
 											</nuxt-link>
-										</div>
+						                </div>
+						                <div class="art-img" v-else>
+											<nuxt-link :to="`/article_management/${content.article_id}`" class="noimage">
+											</nuxt-link>
+						                </div>
+
 										<div class="art-dtl">
 											<h3 class="h-sm">
 												 <nuxt-link :to="`/article_management/${content.article_id}`">{{content.title}}</nuxt-link>
@@ -44,13 +50,18 @@
 											<div class="art-user">
 												<div class="avatar-sm">
 													<nuxt-link :to="`/profile/${content.account_name}`">
-														<span>
+														
+														<span v-if="content.user.profile_icon">
 															<img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
 														</span>
+														<span v-else>
+															<img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+														</span>
+
 														<em>{{content.account_name}}</em>
 													</nuxt-link>
 												</div>
-												 <time :datetime="`${content.pubished_at}`"><i class="far fa-clock"></i>{{content.pubished_at}}</time>
+												 <time :datetime="`${content.published_at}`"><i class="far fa-clock"></i>{{content.published_at}}</time>
 											</div>
 											<div class="art-cnts">
 												<ul>
@@ -80,13 +91,19 @@
 								
 								<article v-if="$store.state.article_management.draft_list.length != 0" v-for="content in $store.state.article_management.draft_list" :key="content.article_id">
 									<div class="art-in">
-										<div class="art-img">
-											<a href="#" :style="`background-image:url('${content.eyecatch_uri}');`">
-											</a>
-										</div>
+										
+										<div class="art-img" v-if="content.eyecatch_uri">
+											<nuxt-link :to="`/article_management/${content.article_id}`" :style="`background-image:url('${content.eyecatch_uri}');`">
+											</nuxt-link>
+						                </div>
+						                <div class="art-img" v-else>
+											<nuxt-link :to="`/article_management/${content.article_id}`" class="noimage">
+											</nuxt-link>
+						                </div>
+
 										<div class="art-dtl">
 											<h3 class="h-sm">
-												<a href="#">{{content.title}}</a>
+												<nuxt-link :to="`/article_management/${content.article_id}`">{{content.title}}</nuxt-link>
 											</h3>
 											<p>{{content.body}}</p>
 											<div class="art-tag">
@@ -97,9 +114,14 @@
 											<div class="art-user">
 												<div class="avatar-sm">
 													<nuxt-link :to="`/profile/${content.account_name}`">
-														<span>
+														
+														<span v-if="content.user.profile_icon">
 															<img :src="`${content.user.profile_icon}`" :alt="`${content.account_name}`">
 														</span>
+														<span v-else>
+															<img src="@/assets/img/user-noimage.png" :alt="`${content.account_name}`">
+														</span>
+														
 														<em>{{content.account_name}}</em>
 													</nuxt-link>
 												</div>
@@ -178,6 +200,7 @@ export default {
 				page_num: 1,
 				page_size: 4
 			})
+			
 	    ])
 
 	    console.log(publish_list.data.article_info);
@@ -191,6 +214,14 @@ export default {
 	mounted(){
 
 		this.$store.dispatch("article_management/init_article_management")
+
+		var urlHash = location.hash;
+		if(urlHash.match('draft')){
+			$('#view-nav').find('li').removeClass('active');
+			$('#view-nav').find('li:nth-child(2)').addClass('active');
+			$('#view-dtl').find('.view').removeClass('show');
+			$('#view-dtl').find('.view:nth-child(2)').addClass('show');
+		}
 		
 	},
 

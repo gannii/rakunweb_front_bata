@@ -4,7 +4,7 @@ import axios from "axios"
 export const state = () => ({
 
 // COMMON
-	login_account: null,
+	login_account: '',
 
 	init_setting: false,
 	b2c_oid: null,
@@ -30,8 +30,8 @@ export const config = {
 	// api_host: 'https://rakunwebstub.azurewebsites.net/api/v1'
 
 // 京都さん
-	api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
-	// api_host: 'https://rakunwebapi-it1-win.azurewebsites.net/api/v1' // 新 2019/01/22
+	// api_host: 'https://rakunweb-it1.azurewebsites.net/api/v1' // 旧
+	api_host: 'https://rakunwebapi-it1.azurewebsites.net/api/v1' // 新 2019/01/24
 
 }
 
@@ -87,6 +87,37 @@ export const mutations = {
 }
 
 export const actions = {
+
+	async nuxtServerInit ({ commit }, { req }) {
+		
+		var thisAccount = this.$auth.$storage.getUniversal("_token.azureSignIn");
+
+		if(thisAccount){
+	  
+		// oid加工抽出
+			thisAccount = Buffer.from(thisAccount, "base64").toString();
+			var _oid = thisAccount.split(',');
+			var oid = _oid[4].split(':');
+			oid = oid[1].substring(1, oid[1].length-1);
+
+		// 初回設定未済確認
+			var res = await this.$axios.$get('/initial_setting/' + oid)
+
+			if(res.data.account_name){
+
+			// アカウント情報 収容
+				var act = await this.$axios.$get('/account/' + res.data.account_name + '/' + res.data.account_name)
+				
+				commit("SET_LOGIN_ACCOUNT", act.data);
+
+				// console.log('nuxtServerInit ===> ' + act.data);
+			}
+
+		}else{
+			return;
+		}	
+
+	},
 
 
 	load(ctx){

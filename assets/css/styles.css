@@ -506,7 +506,7 @@ header#g-head.on {
 
 #init-setting .in .init-body table.defor tr th {
   text-align: left;
-  padding: 20px 0 0;
+  padding: 20px 0 5px;
   font-weight: bold;
 }
 
@@ -1020,7 +1020,14 @@ footer .inner {
 }
 
 .art-cnts ul li b {
+  min-width: 2.6em;
+  text-align: center;
   margin: 0 0 0 5px;
+}
+
+.art-cnts ul li:last-of-type b {
+  overflow: hidden;
+  width: 4.2em;
 }
 
 .icon-minus,
@@ -1119,6 +1126,7 @@ footer .inner {
 .sec.sec-list .sec-body article .art-in {
   overflow: hidden;
   position: relative;
+  width: 100%;
 }
 
 .sec.sec-list .sec-body article .art-in .art-exp {
@@ -1146,12 +1154,10 @@ footer .inner {
 }
 
 .sec.sec-list .sec-body article .art-in .art-dtl .h-sm {
+  white-space: nowrap;
   overflow: hidden;
-  max-height: 4em;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  margin: 0 0 5px;
+  min-height: 2em;
+  text-overflow: ellipsis;
 }
 
 .sec.sec-list .sec-body article .art-in .art-dtl .h-sm a {
@@ -1161,19 +1167,21 @@ footer .inner {
 .sec.sec-list .sec-body article .art-in .art-dtl p {
   white-space: nowrap;
   overflow: hidden;
+  min-height: 2em;
   text-overflow: ellipsis;
 }
 
 .sec.sec-list .sec-body article .art-in .art-dtl .art-tag {
   white-space: nowrap;
   overflow: hidden;
+  min-height: 2.1em;
   text-overflow: ellipsis;
 }
 
 .sec.sec-list .sec-body article .art-in .art-meta {
   display: table;
   width: 100%;
-  padding: 5px 0 0;
+  padding: 10px 0 0;
 }
 
 .sec.sec-list .sec-body article .art-in .art-meta .art-user,
@@ -1199,6 +1207,7 @@ footer .inner {
 
 .sec.sec-list .sec-body article .art-in .art-meta .art-user a em {
   display: none;
+  width: 13em;
 }
 
 .sec.sec-list .sec-body article .art-in .art-meta .art-user a:hover em {
@@ -1416,6 +1425,7 @@ footer .inner {
 
 .btn-act ul li span,
 .btn-act ul li a {
+  cursor: pointer;
   display: block;
   position: relative;
   width: 100%;
@@ -1426,6 +1436,10 @@ footer .inner {
   cursor: auto;
   background-color: #FF1E00;
   border: 0;
+}
+.btn-act ul li.on span,
+.btn-act ul li.on a {
+  cursor: auto;
 }
 
 .btn-act ul li span img,
@@ -1499,7 +1513,7 @@ footer .inner {
   position: fixed;
   top: 80px;
   right: 10px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .floating-menu.btn-act ul li {
@@ -1896,6 +1910,9 @@ input[type="checkbox"] {
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
   }
+  .sec.sec-list .sec-body article .art-in .art-meta .art-cnts{
+    margin-top: 5px;
+  }
   .sec.sec-list .sec-body article .art-in .art-meta .art-cnts ul li:not(:last-of-type) {
     display: inline-block;
   }
@@ -2060,6 +2077,9 @@ input[type="checkbox"] {
   .sec.sec-list .sec-body article .art-in .art-img {
     width: 160px;
   }
+  .sec.sec-list .sec-body article .art-in .art-meta .art-user a em {
+    display: none;
+  }
   .sec.sec-list .sec-body .sub-sec {
     margin: 50px 0 0;
   }
@@ -2115,6 +2135,10 @@ input[type="checkbox"] {
 
 @media screen and (min-width: 1200px) {
   /* common */
+  .sec.sec-list .sec-body article .art-in .art-meta .art-user a em {
+    display: inline-block;
+    vertical-align: middle;
+  }
   .sec[data-type="post"] .sec-body {
     margin: 0 -25px;
   }

@@ -65,6 +65,13 @@ $(function(){
 		}
 	});
 
+	$('.undo').on('click', function(){
+		$('#wrap').removeClass('on');
+		$('#g-head').removeClass('on');
+		$('#g-menu-wrap').removeClass('on');
+		$('#overlay').fadeOut();
+	});
+
 
 // evnet
 /*

@@ -44,9 +44,14 @@
 				<div id="btn-menu" class="h-elem">
 
 					<div class="avatar-sm" v-if="$store.state.login_account">
-						<span>
-							<img :src="`${$store.state.login_account.profile_icon}`" :alt="`${$store.state.login_account.account_name}`">
+
+						<span v-if="$store.state.login_account.profile_icon">
+							<img :src="`${$store.state.login_account.profile_icon}`" :alt="`${$store.state.login_account.nickname}`">
 						</span>
+						<span v-else>
+							<img src="@/assets/img/user-noimage.png" :alt="`${$store.state.login_account.nickname}`">
+						</span>
+						
 					</div>
 
 					<div class="dotline" v-else>
